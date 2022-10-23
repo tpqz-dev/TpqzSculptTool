@@ -9,15 +9,15 @@ class bbp_boolean(bpy.types.Operator):
     value: bpy.props.StringProperty(name = 'value', default = 'UNION')
     @classmethod
     def poll(cls, context):
-        return context.active_object is not None and bpy.context.scene.mychosenObject != context.active_object
+        return context.active_object is not None and bpy.context.scene.list_chosen_object != context.active_object
 
     def execute(self, context):
         #main(context)
-        chosenObj = bpy.context.scene.mychosenObject
+        chosenObj = bpy.context.scene.list_chosen_object
         
         print("--- bbp_boolean "+chosenObj.name)
         #main(context)
-        chosenObj = bpy.context.scene.mychosenObject
+        chosenObj = bpy.context.scene.list_chosen_object
         active_obj = bpy.context.active_object
         print("chosenObj "+chosenObj.name)
         print("active_obj "+active_obj.name)
@@ -35,5 +35,5 @@ class bbp_boolean(bpy.types.Operator):
         bpy.ops.object.delete(use_global=False, confirm=False)
         bpy.ops.object.mode_set(mode='SCULPT')    
         #remove from ui 
-        bpy.context.scene.mychosenObject=None
+        bpy.context.scene.list_chosen_object=None
         return {'FINISHED'}  

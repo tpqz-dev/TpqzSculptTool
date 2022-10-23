@@ -43,13 +43,13 @@ class bbp_join_choosed_object(bpy.types.Operator):
         return context.active_object is not None and  context.active_object.mode=="SCULPT"
 
     def execute(self, context):
-        print(bpy.context.scene.mychosenObject);
-        if bpy.context.scene.mychosenObject is not None:
+        print(bpy.context.scene.list_chosen_object);
+        if bpy.context.scene.list_chosen_object is not None:
             bpy.ops.object.mode_set(mode='OBJECT')
-            bpy.context.scene.mychosenObject.select_set(True)
+            bpy.context.scene.list_chosen_object.select_set(True)
             bpy.ops.object.join()
             bpy.ops.object.mode_set(mode='SCULPT')
-            bpy.context.scene.mychosenObject=None
+            bpy.context.scene.list_chosen_object=None
         else :
             print("Nothing to join");
 

@@ -141,6 +141,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.label(text="remesh:")
         row = col.row()
         row.operator("object.bbp_remesh", text="1").value = "1"
+        row.operator("object.bbp_remesh", text=".2").value = "0.2"
         row.operator("object.bbp_remesh", text=".07").value = "0.07"
         row.operator("object.bbp_remesh", text=".05").value = "0.05"
         row.operator("object.bbp_remesh", text=".03").value = "0.03"
@@ -248,23 +249,15 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         split = row.split(factor=0.33)
         col = split.column()
         col.operator('object.sym', text="SymX", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_X"
-        
         col = split.column()
         col.operator('object.sym', text="SymY", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_Y"
-        
         col = split.column()
         col.operator('object.sym', text="SymZ", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_Z"
 
-         # split by symetry negative
-        # layout = self.layout
-        # box = layout.box()
-        # col = box.column(align = True)
-        # row = col.row()
-
         row = layout.row()
         row.operator('object.bbp_split_by_symetry', text='SliceX', icon='MOD_MIRROR').value ="X"
-        row.operator('object.bbp_split_by_symetry', text='SliceY', icon='MOD_MIRROR').value ="Y" # todo
-        row.operator('object.bbp_split_by_symetry', text='SliceZ', icon='MOD_MIRROR').value ="Z" # todo
+        row.operator('object.bbp_split_by_symetry', text='SliceY', icon='MOD_MIRROR').value ="Y" 
+        row.operator('object.bbp_split_by_symetry', text='SliceZ', icon='MOD_MIRROR').value ="Z" 
         #-------------------------------------------------------------------------------------
         # test
         #-------------------------------------------------------------------------------------  
