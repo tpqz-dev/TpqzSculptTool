@@ -2,4 +2,4 @@
 
 Workflow plugin for Blender sculpt mode.
 
-![manual doc](/TpqzSculptTool/manual/doc.png?raw=true "manual.doc")
+![manual doc](manual/doc.png?raw=true "manual.doc")
