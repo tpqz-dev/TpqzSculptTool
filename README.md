@@ -1,6 +1,20 @@
 # TpqzSculptTool
 Workflow plugin for Blender sculpt mode.
 ![doc2 doc](manual/doc2.png?raw=true "doc2.doc")
+The plugin make it possible to stay in sculpt mode longuer and therefore make the sculpt process more fluid. 
+It integrates basic operations like : 
+- adding/deleting object
+- generate sculptable mesh on the fly
+- split/join functions
+- symmetry
+
+With this plugin you can easily produce modular meshes that can be joined and became a great base for your sculpts.
+
+![doc3 doc](manual/doc3.png?raw=true "doc3.doc")
+
+I hope you will find it usefull.
+
+
 ### ESSENTIAL SHORTCUTS
 Make your life easier and create shortcuts for the brushes you are using often :
 

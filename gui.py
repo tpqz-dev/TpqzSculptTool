@@ -97,7 +97,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         
         col.separator()
         row = col.row()
-        row.label(text="face set / automasking:")
+        row.label(text="face set :")
         row = col.row()
         row.operator("sculpt.face_sets_create", text="visible",icon="FACE_MAPS").mode='VISIBLE'
         row.operator("sculpt.face_sets_init", text="loose",icon="FACE_MAPS").mode="LOOSE_PARTS"
