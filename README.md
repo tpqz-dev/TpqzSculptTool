@@ -1,6 +1,13 @@
 # TpqzSculptTool
 Workflow plugin for Blender sculpt mode.
 ![doc2 doc](manual/doc2.png?raw=true "doc2.doc")
+
+### DEMO :
+ https://www.youtube.com/watch?v=7B63X3QTvn4
+ https://www.youtube.com/watch?v=X2SYB6l-yyE&t=44s
+
+
+### Why this plugin
 The plugin make it possible to stay in sculpt mode longuer and therefore make the sculpt process more fluid. 
 It integrates basic operations like : 
 - adding/deleting object
@@ -27,9 +34,6 @@ Make your life easier and create shortcuts for the brushes you are using often :
     - colors/ (fill)
 
 A shortcut is created at the plugin installation to alt+X to show the custom menu.
-
-Shortcut  wireframe
-create shortcut to object properies wireframe
 
 ### MANUAL
 ![manual doc](manual/doc.png?raw=true "manual.doc")
