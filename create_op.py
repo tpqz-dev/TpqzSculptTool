@@ -1,13 +1,6 @@
 import bpy
 import bmesh
 from  .utils import *
-def greaterDimension(dim):
-    dx= dim[0]
-    dy= dim[1]
-    dz= dim[2]
-    m1 = max(dx,dy)
-    m2 = max(m1,dz)
-    return m2
 
 
 def bbpSculptExtract(context):
@@ -172,8 +165,8 @@ class bbp_insert_object(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='OBJECT')
      
         print("new dimensions x "+str(dx) )
-        print("new dimensions x "+str(dy) )
-        print("new dimensions x "+str(dz) )
+        print("new dimensions y "+str(dy) )
+        print("new dimensions z "+str(dz) )
         bpy.context.object.location = [lx,ly,lz]
         bpy.context.view_layer.update() 
         print("altered dimensions "+str( bpy.context.object.dimensions) )

@@ -69,10 +69,10 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row = col.row()
         row.label(text="create:")
         row = col.row()
-        row.operator("object.bbp_sculpt", text="shadowboxit",icon="OUTLINER_OB_VOLUME")
+        row.operator("object.bbp_sculpt", text="Xtract & Solidify",icon="OUTLINER_OB_VOLUME")
         row = col.row()
         row.operator("object.bbp_mask_new_object", text="from mask",icon="ADD")
-        row.operator("object.bbp_copy_face_set", text="from face set",icon="MESH_CUBE")
+        row.operator("object.bbp_copy_face_set", text="Xtract faceset",icon="MESH_CUBE")
         row = col.row()
         row.operator("object.bbp_duplicate", text="mesh duplicate",icon="DUPLICATE")
         row = col.row()
@@ -103,7 +103,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator("sculpt.face_sets_init", text="loose",icon="FACE_MAPS").mode="LOOSE_PARTS"
         row = col.row()
         row.operator("sculpt.face_sets_create", text="masked",icon="FACE_MAPS").mode="MASKED"
-        row.operator("object.bbp_mask_hidden_face_set", text="invert mask",icon="FACE_MAPS") 
+        row.operator("object.bbp_mask_hidden_face_set", text="mask hidden",icon="FACE_MAPS") 
 
         # layout = self.layout
         # row = layout.row(align=True)

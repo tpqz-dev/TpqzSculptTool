@@ -14,7 +14,7 @@ def greaterDimension(dim):
     dz= dim[2]
     m1 = max(dx,dy)
     m2 = max(m1,dz)
-    return m2
+    return m2/2
 
 
 def bbpSculptExtract(context):
