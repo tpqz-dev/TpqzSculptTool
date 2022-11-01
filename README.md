@@ -38,4 +38,40 @@ A shortcut is created at the plugin installation to alt+X to show the custom men
 ### MANUAL
 ![manual doc](manual/doc.png?raw=true "manual.doc")
 
+## MAIN FEATURES
+Most of the features are self explanatory, most of them are simple Blender features. This section will focus on the most important features of the plugin.
+### Create
+***Xtract & Solidify*** : Create a new sculptable mesh  from a mask
+![](manual/xtract&solidify.png)
+***From mask*** : Create a masked object from part of the object
+![](manual/fromMask.png)
+***Xtract faceset*** : Create new faceset from visible faceset
+![](manual/xtractfacesets.png)
+***Duplicate mesh*** : Duplicate current mesh 
+![](manual/duplicatemesh.png)
+***Create mesh*** : Generate  cube, sphere, cylinder, torus, cone or plane then automaticaly select transform brush
+![](manual/create.png)
 
+### Mesh operations
+***Mask subdivide*** : Mask a zone on your mesh to subdivise a zone of the mesh
+![](manual/maskSubdivise.png)
+***Spherize*** : Spherize a mesh. Works well with xtract solidify.
+![](manual/sbSphere.png)
+
+### Face sets
+***Mask hidden face set*** : Sometime usefull.
+![](manual/masHiddenfaceset.png)
+### Join
+***Join from outliner*** : Join several objets by selecting them in the outliner
+![](manual/joinFromOutliner.png)
+***Simple join*** : Join the selected object with the one selected in the select box.
+[](join_op.py)
+
+### Boolean operations
+Use the object selector and click on the desired opertation to make an Add, a difference or a boolean operation.
+***Add***
+![](manual/booleanAdd.png)
+***Difference***
+![](manual/booleanDifference.png)
+***Intersect***
+![](manual/booleanIntersect.png)
