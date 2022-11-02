@@ -8,7 +8,7 @@ Workflow plugin for Blender sculpt mode.
 
 
 ### Why this plugin
-The plugin make possible to stay in sculpt mode longer and therefore make the sculpt process more fluid.
+The plugin makes possible to stay in sculpt mode longer and therefore make the sculpt process more fluid. 
 It integrates basic operations like : 
 - adding/deleting object
 - generate sculptable mesh on the fly
