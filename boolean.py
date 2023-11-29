@@ -1,5 +1,6 @@
 
 import bpy
+from  .utils import *
 
 class bbp_boolean(bpy.types.Operator):
     """Tooltip"""
@@ -14,26 +15,27 @@ class bbp_boolean(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         chosenObj = bpy.context.scene.list_chosen_object
+        if bpy.context.scene.list_chosen_object is not None:
+            print("--- bbp_boolean "+chosenObj.name)
+            #main(context)
+            chosenObj = bpy.context.scene.list_chosen_object
+            active_obj = bpy.context.active_object
+            print("chosenObj "+chosenObj.name)
+            print("active_obj "+active_obj.name)
         
-        print("--- bbp_boolean "+chosenObj.name)
-        #main(context)
-        chosenObj = bpy.context.scene.list_chosen_object
-        active_obj = bpy.context.active_object
-        print("chosenObj "+chosenObj.name)
-        print("active_obj "+active_obj.name)
-    
-        # modifiers 
-        bool_mod = active_obj.modifiers.new(type="BOOLEAN", name="tpqz_boolean")
-        bpy.context.object.modifiers["tpqz_boolean"].object = chosenObj
-        bpy.ops.object.modifier_set_active(modifier="tpqz_boolean")
-        bpy.context.object.modifiers["tpqz_boolean"].operation = self.value
-        bpy.ops.object.modifier_apply(modifier="tpqz_boolean")
-        bpy.ops.object.mode_set(mode='OBJECT')
-        # delete
-        bpy.ops.object.select_all(action='DESELECT')
-        chosenObj.select_set(True)
-        bpy.ops.object.delete(use_global=False, confirm=False)
-        bpy.ops.object.mode_set(mode='SCULPT')    
-        #remove from ui 
-        bpy.context.scene.list_chosen_object=None
+            # modifiers 
+            bool_mod = active_obj.modifiers.new(type="BOOLEAN", name="tpqz_boolean")
+            bpy.context.object.modifiers["tpqz_boolean"].object = chosenObj
+            bpy.ops.object.modifier_set_active(modifier="tpqz_boolean")
+            bpy.context.object.modifiers["tpqz_boolean"].operation = self.value
+            bpy.ops.object.modifier_apply(modifier="tpqz_boolean")
+            bpy.ops.object.mode_set(mode='OBJECT')
+            # delete
+            bpy.ops.object.select_all(action='DESELECT')
+            chosenObj.select_set(True)
+            bpy.ops.object.delete(use_global=False, confirm=False)
+            bpy.ops.object.mode_set(mode='SCULPT')    
+            #remove from ui 
+            bpy.context.scene.list_chosen_object=None
+            force_symmetry_x()
         return {'FINISHED'}  

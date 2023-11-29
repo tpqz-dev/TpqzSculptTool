@@ -8,6 +8,16 @@ def pivot_to_unmasked():
     bpy.context.object.use_mesh_mirror_z = False
     bpy.ops.sculpt.set_pivot_position(mode ='UNMASKED')
 
+def force_symmetry_x():
+    #bool_force_x = bpy.types.Scene.tpqz_force_symmetry 
+    #print("bool_force_x = "  )
+    #print( bool_force_x )
+    #if bool_force_x == True :
+    bpy.context.object.use_mesh_mirror_x = True
+    bpy.context.object.use_mesh_mirror_y = False
+    bpy.context.object.use_mesh_mirror_z = False
+    bpy.ops.sculpt.set_pivot_position(mode='UNMASKED')
+
 def greaterDimension(dim):
     dx= dim[0]
     dy= dim[1]
@@ -55,14 +65,17 @@ def duplicate(context):
         bpy.ops.object.editmode_toggle()
         bpy.ops.mesh.select_all(action='DESELECT')
         bpy.ops.mesh.select_all(action='SELECT')
-        bpy.ops.mesh.duplicate_move(MESH_OT_duplicate={"mode":1}, TRANSFORM_OT_translate={"value":(0, 0, 0), "orient_axis_ortho":'X', "orient_type":'GLOBAL', "orient_matrix":((0, 0, 0), (0, 0, 0), (0, 0, 0)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, "use_accurate":False, "use_automerge_and_split":False})
+        bpy.ops.mesh.duplicate_move(MESH_OT_duplicate={"mode":1}, TRANSFORM_OT_translate={"value":(0, 0, 0), "orient_type":'GLOBAL', "orient_matrix":((0, 0, 0), (0, 0, 0), (0, 0, 0)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, "use_accurate":False, "use_automerge_and_split":False})
+     
         bpy.ops.mesh.separate(type='SELECTED')
         bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.object.select_all(action='DESELECT')
         bpy.ops.sculpt.sculptmode_toggle()
-        pivot_to_unmasked()
+        force_symmetry_x()
         #bpy.ops.mesh.select_all(action='DESELECT')
         bpy.context.view_layer.objects.active = currentObject
         currentObject.select_set(True)
         #bpy.ops.mesh.sculpt_vertex_color_add()
 
+def set_move_brush():
+    bpy.ops.wm.tool_set_by_id(name="builtin.move")

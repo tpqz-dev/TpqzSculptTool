@@ -1,5 +1,5 @@
 import bpy
-
+from  .utils import *
 class bbp_sculpt_restore_x(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.bbp_sculpt_restore_x"

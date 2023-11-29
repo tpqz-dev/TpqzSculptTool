@@ -36,7 +36,7 @@ class bbp_delete_mesh(bpy.types.Operator):
         print(objs)
         scene = bpy.context.scene
         
-        if len(objs)>0 :
+        if len(objs)>=1 :
             # no object : return to object mmode
             print("returning to object mode all")
             lastObj = objs[-1]
@@ -53,8 +53,9 @@ class bbp_delete_mesh(bpy.types.Operator):
             bpy.ops.object.mode_set(mode='SCULPT')
        
         else :
-            bpy.ops.sculpt.sculptmode_toggle()
-        #delete obj
+            print ("nothing to delete : one object remaining")
+            bpy.ops.object.mode_set(mode='SCULPT')
+
    
         return {'FINISHED'} 
 
@@ -92,7 +93,7 @@ class bbp_delete_by_symetry(bpy.types.Operator):
              bpy.ops.mesh.bisect(plane_co=(0, 0, 0), plane_no=(0, 0, 1), clear_outer=True, xstart=651, xend=657, ystart=596, yend=65, flip=False)
 
         bpy.ops.object.mode_set(mode='SCULPT')
-        pivot_to_unmasked()
+        force_symmetry_x()
         return {'FINISHED'}
 
 
@@ -108,7 +109,7 @@ class bbp_delete(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         print("bbp_delete---")
-        
+        force_symmetry_x()
         return {'FINISHED'}  
     
 class bbp_delete_hiddenpg(bpy.types.Operator):
@@ -128,7 +129,7 @@ class bbp_delete_hiddenpg(bpy.types.Operator):
         bpy.ops.mesh.delete(type='VERT')
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
-        pivot_to_unmasked()
+        force_symmetry_x()
         return {'FINISHED'}   
 
 
@@ -155,5 +156,5 @@ class bbp_split_by_symetry(bpy.types.Operator):
              bpy.ops.mesh.bisect(plane_co=(0, 0, 0), plane_no=(0, 0, 1), clear_outer=False, xstart=651, xend=657, ystart=596, yend=65, flip=False)
 
         bpy.ops.object.mode_set(mode='SCULPT')
-        pivot_to_unmasked()
+        force_symmetry_x()
         return {'FINISHED'}

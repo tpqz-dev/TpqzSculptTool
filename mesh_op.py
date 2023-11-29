@@ -1,6 +1,6 @@
 
 import bpy
-
+from  .utils import *
 class bbp_remesh(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.bbp_remesh"
@@ -28,9 +28,7 @@ class bbp_remesh(bpy.types.Operator):
         bpy.context.object.data.use_remesh_fix_poles = True
         bpy.context.object.data.use_remesh_preserve_vertex_colors = True
         bpy.ops.object.voxel_remesh()
-        
-        #bpy.ops.object.sym(sym_axis="POSITIVE_X")
-        #bpy.ops.object.mode_set(mode='SCULPT')
+        force_symmetry_x()
         return {'FINISHED'} 
 
 class bbp_close_hole(bpy.types.Operator):
@@ -50,7 +48,7 @@ class bbp_close_hole(bpy.types.Operator):
         bpy.ops.mesh.fill_holes(sides=0 )
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
-        #bpy.ops.object.voxel_remesh()
+        force_symmetry_x()
         return {'FINISHED'} 
 
 
@@ -74,6 +72,7 @@ class bbp_mask_subdivide(bpy.types.Operator):
         bpy.ops.mesh.subdivide()
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
+        force_symmetry_x()
         return {'FINISHED'} 
  
 
@@ -98,6 +97,7 @@ class bbp_spherize(bpy.types.Operator):
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
         bpy.ops.object.voxel_remesh()
+        force_symmetry_x()
         return {'FINISHED'}
 
 
@@ -106,7 +106,6 @@ class bbp_sculpt_solidify(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.bbp_sculpt_solidify"
     bl_label = "bbp_sculpt_solidify"
- 
     bl_options = {"REGISTER", "UNDO"}
     @classmethod
     def poll(cls, context):
@@ -124,6 +123,7 @@ class bbp_sculpt_solidify(bpy.types.Operator):
             print("apply solidify")
             #bool_mod.modifier_apply(modifier="TPQZ_BOOL")
             bpy.ops.object.modifier_apply(modifier="TPQZ_BOOL")
+            #force_symmetry_x()
 
         else:
             print("no apply")
@@ -158,5 +158,6 @@ class bbp_mirror(bpy.types.Operator):
         bpy.ops.mesh.normals_make_consistent(inside=False)
         bpy.context.scene.tool_settings.transform_pivot_point = 'MEDIAN_POINT'
         bpy.ops.object.mode_set(mode='SCULPT')
+        #force_symmetry_x()
         return {'FINISHED'}
 

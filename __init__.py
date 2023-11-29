@@ -13,6 +13,7 @@ bl_info = {
 import bpy
 import rna_keymap_ui
 
+from  .utils import *
 from  .gui import *
 from  .create_op import *
 from  .delete_op import *
@@ -75,6 +76,7 @@ def register():
     #bpy.utils.register_module(__name__)
     bpy.types.Scene.solidify_float = bpy.props.FloatProperty(name="solidify_float", default=0.1)
     bpy.types.Scene.solidify_bool = bpy.props.BoolProperty(name="solidify_bool", default=True)
+    bpy.types.Scene.tpqz_force_symmetry = bpy.props.BoolProperty(name="tpqz_force_symmetry", default=True)
     bpy.types.Scene.obj = bpy.props.StringProperty()
     bpy.types.Scene.list_chosen_object = bpy.props.PointerProperty(
     type=bpy.types.Object,
@@ -89,4 +91,8 @@ def unregister():
     del bpy.types.Scene.list_chosen_object
     del bpy.types.Scene.solidify_float
     del bpy.types.Scene.solidify_bool
+    del bpy.types.Scene.tpqz_force_symmetry 
     bpy.types.INFO_HT_header.remove(draw_item)
+
+    # bug boolean with empty target
+    # split hidden

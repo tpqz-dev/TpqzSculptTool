@@ -282,10 +282,12 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
     bl_label = "TPQZ Custom Menu"
     bl_idname = "OBJECT_MT_custom_menu_tpqz"
 
+
     def draw(self, context):
         brush = context.tool_settings.sculpt.brush
         layout = self.layout
-        
+        scene = context.scene
+
         layout.prop(brush, 'use_frontface', text="front")  
         layout.prop(brush, 'use_automasking_face_sets', text="faces set")  
         layout.prop(brush, 'use_automasking_topology', text="topo") 
@@ -294,6 +296,7 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
         layout.operator("sculpt.set_pivot_position", text="unmask",icon="ORIENTATION_LOCAL").mode='UNMASKED'
         layout.operator("object.bbp_sculpt_unmasked_center", text="center",icon="ORIENTATION_VIEW")
         layout.operator("sculpt.set_pivot_position", text="origin",icon="ORIENTATION_GLOBAL").mode='ORIGIN'
+        layout.prop(scene, 'tpqz_force_symmetry', text="force Sym")
         
 
 

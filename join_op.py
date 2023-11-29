@@ -1,5 +1,5 @@
 import bpy
-
+from  .utils import *
 class bbp_join_meshes(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.bbp_join_meshes"
@@ -29,6 +29,7 @@ class bbp_join_meshes(bpy.types.Operator):
         print("sculpt mode toggle")
         bpy.ops.sculpt.sculptmode_toggle()
         print("******************")
+        force_symmetry_x()
         return {'FINISHED'}
 
 
@@ -50,6 +51,7 @@ class bbp_join_choosed_object(bpy.types.Operator):
             bpy.ops.object.join()
             bpy.ops.object.mode_set(mode='SCULPT')
             bpy.context.scene.list_chosen_object=None
+            force_symmetry_x()
         else :
             print("Nothing to join");
 
