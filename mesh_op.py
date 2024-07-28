@@ -26,7 +26,7 @@ class bbp_remesh(bpy.types.Operator):
         bpy.context.object.data.remesh_voxel_size = float(self.value)
         bpy.context.object.data.remesh_voxel_adaptivity = 0
         bpy.context.object.data.use_remesh_fix_poles = True
-        bpy.context.object.data.use_remesh_preserve_vertex_colors = True
+        bpy.context.object.data.use_remesh_preserve_attributes = True
         bpy.ops.object.voxel_remesh()
         force_symmetry_x()
         return {'FINISHED'} 
@@ -65,7 +65,7 @@ class bbp_mask_subdivide(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         print("bbp_mask_subdivide---")
-        bpy.ops.paint.hide_show(action='HIDE', area='MASKED')
+        bpy.ops.paint.hide_show_masked(action='HIDE')
         bpy.ops.object.editmode_toggle()
         bpy.ops.mesh.select_all(action='DESELECT')
         bpy.ops.mesh.reveal()

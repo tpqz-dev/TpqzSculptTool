@@ -34,9 +34,9 @@ class bbp_sculpt_unmasked_center(bpy.types.Operator):
         bpy.ops.sculpt.set_pivot_position(mode='UNMASKED')
         return {'FINISHED'}
 
-def pivot_to_unmasked():
-        bpy.ops.wm.tool_set_by_id(name="builtin.move")
-        bpy.context.object.use_mesh_mirror_x = False
-        bpy.context.object.use_mesh_mirror_y = False
-        bpy.context.object.use_mesh_mirror_z = False
-        bpy.ops.sculpt.set_pivot_position(mode ='UNMASKED')
+# def pivot_to_unmasked():
+#         bpy.ops.wm.tool_set_by_id(name="builtin.move")
+#         bpy.context.object.use_mesh_mirror_x = False
+#         bpy.context.object.use_mesh_mirror_y = False
+#         bpy.context.object.use_mesh_mirror_z = False
+#         bpy.ops.sculpt.set_pivot_position(mode ='UNMASKED')

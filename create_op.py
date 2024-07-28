@@ -74,7 +74,8 @@ class bbp_insert_object(bpy.types.Operator):
             bpy.ops.mesh.paint_mask_extract()
         else:
             bpy.ops.object.mode_set(mode='OBJECT')
-            duplicate(context)
+            #duplicate(context)
+            bpy.ops.mesh.primitive_plane_add(enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
 
         bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)

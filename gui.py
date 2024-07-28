@@ -48,17 +48,17 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         #-------------------------------------------------------------------------------------
         # pivot
         #-------------------------------------------------------------------------------------  
-        #layout = self.layout
-        #box = layout.box()
-        #col = box.column(align = True)
-        # row = col.row()
-        # row.label(text="pivot:")
-        # row = col.row()
+        layout = self.layout
+        box = layout.box()
+        col = box.column(align = True)
+        row = col.row()
+        row.label(text="pivot:")
+        row = col.row()
         
-        # row.operator("object.bbp_sculpt_restore_x", text="sym",icon="ORIENTATION_GIMBAL")
-        # row.operator("sculpt.set_pivot_position", text="unmask",icon="ORIENTATION_LOCAL").mode='UNMASKED'
-        # row.operator("object.bbp_sculpt_unmasked_center", text="center",icon="ORIENTATION_VIEW")
-        # row.operator("sculpt.set_pivot_position", text="origin",icon="ORIENTATION_GLOBAL").mode='ORIGIN'
+        row.operator("object.bbp_sculpt_restore_x", text="sym",icon="ORIENTATION_GIMBAL")
+        row.operator("sculpt.set_pivot_position", text="unmask",icon="ORIENTATION_LOCAL").mode='UNMASKED'
+        row.operator("object.bbp_sculpt_unmasked_center", text="center",icon="ORIENTATION_VIEW")
+        row.operator("sculpt.set_pivot_position", text="origin",icon="ORIENTATION_GLOBAL").mode='ORIGIN'
 
         #-------------------------------------------------------------------------------------
         # create
@@ -70,8 +70,6 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.label(text="create:")
         row = col.row()
         row.operator("object.bbp_sculpt", text="Xtract & Solidify",icon="OUTLINER_OB_VOLUME")
-        row = col.row()
-        row.operator("object.bbp_mask_new_object", text="from mask",icon="ADD")
         row.operator("object.bbp_copy_face_set", text="Xtract faceset",icon="MESH_CUBE")
         row = col.row()
         row.operator("object.bbp_duplicate", text="mesh duplicate",icon="DUPLICATE")
@@ -126,6 +124,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row = col.row()
         row.label(text="split:")
         row = col.row()
+        row.operator("object.bbp_mask_new_object", text="from mask",icon="ADD")
         row.operator("object.bbp_split_hiddenpg", text="hidden",icon="MOD_PHYSICS")
         row.operator("object.bbp_split_group", text="loose",icon="OUTLINER_OB_POINTCLOUD")
         

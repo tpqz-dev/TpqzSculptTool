@@ -18,6 +18,10 @@ def force_symmetry_x():
     bpy.context.object.use_mesh_mirror_z = False
     bpy.ops.sculpt.set_pivot_position(mode='UNMASKED')
 
+def pivot_to_center():
+        bpy.context.object.use_mesh_mirror_x = False
+        bpy.ops.sculpt.set_pivot_position(mode='UNMASKED')
+
 def greaterDimension(dim):
     dx= dim[0]
     dy= dim[1]
@@ -48,15 +52,18 @@ def bbpSculptExtract(context):
 
     
 def isMasked(context):
-     bmeshContainer = bmesh.new() # New bmesh container
-     bmeshContainer.from_mesh(context.sculpt_object.data) # Fill container with our object        
-     mask = bmeshContainer.verts.layers.paint_mask.verify() # Set the active mask layer as custom layer
-     print("number of elements "+ str(bmeshContainer.verts.layers.paint_mask.verify()))
-     bmeshContainer.verts.ensure_lookup_table() # Just incase > Remove if unneccessary   
-     filtered_list = list(filter(lambda x: (x[mask] > 0), bmeshContainer.verts))      
-     print("number of elements "+str(len(filtered_list)))   
-     return len(filtered_list)>0; 
+     bpy.ops.object.mode_set(mode='SCULPT')
+     bm = bmesh.new() # New bmesh container
+     bm.from_mesh(context.sculpt_object.data) # Fill container with our object        
+     mask = bm.verts.layers.float.get('.sculpt_mask')# get mask points
+    #print("number of elements "+ str(bm.verts.layers.paint_mask.verify()))
+     bm.verts.ensure_lookup_table() # Just incase > Remove if unneccessary   
+    # filtered_list = list(filter(lambda x: (x[mask] > 0), bm.verts))
+     res = False if mask is None else True
+     return res; 
 
+  
+        
 def duplicate(context):
         currentObject = context.active_object
         #bpy.ops.paint.hide_show(action='HIDE', area='MASKED')
@@ -79,3 +86,9 @@ def duplicate(context):
 
 def set_move_brush():
     bpy.ops.wm.tool_set_by_id(name="builtin.move")
+
+    def is_null(value):
+        if value is None:
+            return True
+        else:
+            return False
