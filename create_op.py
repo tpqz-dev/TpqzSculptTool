@@ -34,7 +34,7 @@ class bbp_mask_new_object(bpy.types.Operator):
         #main(context
         print("bbp_mask_new_object ")
         bpy.ops.ed.undo_push(message="new object step")
-        bpy.ops.mesh.paint_mask_slice(new_object=True)
+        bpy.ops.sculpt.paint_mask_slice(new_object=True)
         bpy.ops.object.mode_set(mode='SCULPT')
         force_symmetry_x()
         set_move_brush()

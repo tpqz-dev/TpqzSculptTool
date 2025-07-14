@@ -65,18 +65,11 @@ class bbp_split_hiddenpg(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         print("bbp_split_hidden face set---")
-        #is hidden
-        #bpy.ops.sculpt.face_set_change_visibility(mode='INVERT')
         bpy.ops.paint.mask_flood_fill(mode='VALUE', value=1)
         bpy.ops.sculpt.reveal_all()
-        #bpy.ops.sculpt.face_set_change_visibility(mode='SHOW_ALL')
-        bpy.ops.mesh.paint_mask_slice(fill_holes=False, new_object=True)
+        bpy.ops.sculpt.paint_mask_slice(fill_holes=False, new_object=True)
         bpy.ops.object.mode_set(mode='SCULPT')
-        #bpy.ops.object.editmode_toggle()
-        #bpy.ops.mesh.reveal()
-        #bpy.ops.mesh.separate(type='SELECTED')
-        #bpy.ops.object.editmode_toggle()
-        #bpy.ops.sculpt.sculptmode_toggle()
+  
         return {'FINISHED'}  
     
 class bbp_split_group(bpy.types.Operator):
@@ -111,7 +104,6 @@ class bbp_split_face_set(bpy.types.Operator):
 
     def execute(self, context):
         print("bbp_split_face_set")
-        #bpy.ops.mesh.face_set_extract(add_boundary_loop=True, smooth_iterations=4, apply_shrinkwrap=True, add_solidify=True)
         result = bpy.ops.mesh.face_set_extract('INVOKE_DEFAULT')
         print(result)
         self.report({'INFO'}, "a message")

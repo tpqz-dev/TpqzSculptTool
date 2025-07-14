@@ -12,7 +12,7 @@ class bbp_delete_masked(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         print("bbp_delete_masked---")
-        bpy.ops.mesh.paint_mask_slice(fill_holes=False, new_object=False)
+        bpy.ops.sculpt.paint_mask_slice(fill_holes=False, new_object=False)
         return {'FINISHED'}  
     
 class bbp_delete_mesh(bpy.types.Operator):
