@@ -90,30 +90,18 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         # face set
         #-------------------------------------------------------------------------------------
         layout = self.layout
-        
-        row = layout.row(align=True)
-        
+        box = layout.box()
+        col = box.column(align=True)
         col.separator()
         row = col.row()
         row.label(text="face set :")
         row = col.row()
-        row.operator("sculpt.face_sets_create", text="visible",icon="FACE_MAPS").mode='VISIBLE'
-        row.operator("sculpt.face_sets_init", text="loose",icon="FACE_MAPS").mode="LOOSE_PARTS"
+        row.operator("sculpt.face_sets_create", text="visible", icon="FACE_MAPS").mode = 'VISIBLE'
+        row.operator("sculpt.face_sets_init", text="loose", icon="FACE_MAPS").mode = "LOOSE_PARTS"
         row = col.row()
-        row.operator("sculpt.face_sets_create", text="masked",icon="FACE_MAPS").mode="MASKED"
-        row.operator("object.bbp_mask_hidden_face_set", text="mask hidden",icon="FACE_MAPS") 
-
-        # layout = self.layout
-        # row = layout.row(align=True)
-        # row = col.row()
-        # row.label(text="Automasking :")
-        # row = col.row()
-        # col = row.column() 
-        # col.prop(brush, 'use_frontface', text="front")  
-        # col = row.column()
-        # col.prop(brush, 'use_automasking_face_sets', text="faces set")   
-        # col = row.column()
-        # col.prop(brush, 'use_automasking_topology', text="topo")       
+        row.operator("sculpt.face_sets_create", text="masked", icon="FACE_MAPS").mode = "MASKED"
+        row.operator("object.bbp_mask_hidden_face_set", text="mask hidden", icon="FACE_MAPS") 
+   
         
         #-------------------------------------------------------------------------------------
         # split
@@ -127,8 +115,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator("object.bbp_mask_new_object", text="from mask",icon="ADD")
         row.operator("object.bbp_split_hiddenpg", text="hidden",icon="MOD_PHYSICS")
         row.operator("object.bbp_split_group", text="loose",icon="OUTLINER_OB_POINTCLOUD")
-        
-        #srow.operator("object.bbp_split_face_set", text="face set",icon="OUTLINER_OB_POINTCLOUD")
+
         #-------------------------------------------------------------------------------------
         # Remesh
         #------------------------------------------------------------------------------------- 
@@ -181,15 +168,13 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator("object.bbp_delete_hiddenpg", text="hidden face set",icon="CANCEL")
         row = col.row()
         row.operator("object.bbp_delete_masked", text="masked",icon="CANCEL")
-        row.operator("mesh.paint_mask_slice", text="masked&close",icon="CANCEL").new_object=False
+        row.operator("sculpt.paint_mask_slice", text="masked&close",icon="CANCEL").new_object=False
         row = col.row()
         row.operator("object.bbp_delete_by_symetry", text="byX",icon="CANCEL").value = "X"
         row.operator("object.bbp_delete_by_symetry", text="byY",icon="CANCEL").value = "Y"
         row.operator("object.bbp_delete_by_symetry", text="byZ",icon="CANCEL").value = "Z"
         row = col.row()
         
-        # bpy.ops.sculpt.expand(target='FACE_SETS', falloff_type='GEODESIC', invert=False, use_modify_active=False)
-
         #-------------------------------------------------------------------------------------
         # join
         #------------------------------------------------------------------------------------- 
@@ -206,6 +191,10 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         col = row.column()
         row.operator("object.bbp_join_choosed_object", text="join",icon="LINKED")
       
+        #-------------------------------------------------------------------------------------
+        # boolean
+        #-------------------------------------------------------------------------------------  
+
         # New row
         row = layout.row()
         # Bool diff button
@@ -219,11 +208,6 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         # Bool union button
         col = row.column()
         col.operator('object.bbp_boolean', text='Intersect', icon='MOD_BOOLEAN').value="INTERSECT"
-        #-------------------------------------------------------------------------------------
-        # boolean
-        #-------------------------------------------------------------------------------------  
-
- 
         #-------------------------------------------------------------------------------------
         # symmetry
         #------------------------------------------------------------------------------------- 

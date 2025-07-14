@@ -9,10 +9,6 @@ def pivot_to_unmasked():
     bpy.ops.sculpt.set_pivot_position(mode ='UNMASKED')
 
 def force_symmetry_x():
-    #bool_force_x = bpy.types.Scene.tpqz_force_symmetry 
-    #print("bool_force_x = "  )
-    #print( bool_force_x )
-    #if bool_force_x == True :
     bpy.context.object.use_mesh_mirror_x = True
     bpy.context.object.use_mesh_mirror_y = False
     bpy.context.object.use_mesh_mirror_z = False
@@ -32,23 +28,68 @@ def greaterDimension(dim):
 
 
 def bbpSculptExtract(context):
-     print("function call---")
-     # verify dyn topo
-     # verify mask created
-     #bpy.ops.mesh.masktovgroup()
-     bpy.ops.mesh.paint_mask_extract()
-     #bpy.ops.object.apply_all_modifiers()
-     bpy.context.object.modifiers["geometry_extract_solidify"].thickness = 0.05
-     bpy.context.object.modifiers["geometry_extract_solidify"].offset = 1
-     bpy.ops.object.modifier_apply(modifier="geometry_extract_solidify")
-     bpy.ops.object.editmode_toggle()
-     bpy.ops.mesh.select_all(action='TOGGLE')
-     bpy.ops.transform.shrink_fatten(value=0.0769038, use_even_offset=False, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-     bpy.ops.sculpt.sculptmode_toggle()
-     bpy.context.object.data.remesh_voxel_size = 0.0265
-     bpy.ops.object.voxel_remesh()
-     bpy.ops.wm.tool_set_by_id(name="builtin_brush.Draw")
-     #bpy.ops.mesh.sculpt_vertex_color_add()
+    print("function call ---")
+
+    # Store original active object
+    original_obj = bpy.context.object
+
+    # Ensure we're in SCULPT mode
+    if bpy.context.object.mode != 'SCULPT':
+        bpy.ops.object.mode_set(mode='SCULPT')
+
+    # Run mask extract
+    bpy.ops.sculpt.paint_mask_extract()
+
+    # The new extracted object becomes the active object
+    extracted_obj = bpy.context.object
+    print(f"Extracted object: {extracted_obj.name}")
+
+    # Find the solidify modifier on extracted object
+    solidify_mod = None
+    for mod in extracted_obj.modifiers:
+        if mod.type == 'SOLIDIFY':
+            solidify_mod = mod
+            break
+
+    if solidify_mod:
+        solidify_mod.thickness = 0.05
+        solidify_mod.offset = 1.0
+
+        # Apply modifier
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.ops.object.modifier_apply(modifier=solidify_mod.name)
+    else:
+        print("No solidify modifier found!")
+
+    # Enter EDIT mode to shrink/fatten
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_all(action='SELECT')
+
+    bpy.ops.transform.shrink_fatten(
+        value=0.0769038,
+        use_even_offset=False,
+        mirror=True,
+        use_proportional_edit=False
+    )
+
+    # Back to OBJECT mode
+    bpy.ops.object.mode_set(mode='OBJECT')
+
+    # Apply voxel remesh
+    extracted_obj.data.remesh_voxel_size = 0.0265
+    bpy.ops.object.voxel_remesh()
+
+    # Back to sculpt mode and select Draw brush
+    bpy.ops.object.mode_set(mode='SCULPT')
+    bpy.ops.wm.tool_set_by_id(name="builtin_brush.Draw")
+
+    # Optionally re-select original object 
+    # bpy.context.view_layer.objects.active = original_obj
+
+    print("Sculpt extract complete!")
+
+
+
 
     
 def isMasked(context):
@@ -58,7 +99,6 @@ def isMasked(context):
      mask = bm.verts.layers.float.get('.sculpt_mask')# get mask points
     #print("number of elements "+ str(bm.verts.layers.paint_mask.verify()))
      bm.verts.ensure_lookup_table() # Just incase > Remove if unneccessary   
-    # filtered_list = list(filter(lambda x: (x[mask] > 0), bm.verts))
      res = False if mask is None else True
      return res; 
 
@@ -79,10 +119,8 @@ def duplicate(context):
         bpy.ops.object.select_all(action='DESELECT')
         bpy.ops.sculpt.sculptmode_toggle()
         force_symmetry_x()
-        #bpy.ops.mesh.select_all(action='DESELECT')
         bpy.context.view_layer.objects.active = currentObject
         currentObject.select_set(True)
-        #bpy.ops.mesh.sculpt_vertex_color_add()
 
 def set_move_brush():
     bpy.ops.wm.tool_set_by_id(name="builtin.move")
