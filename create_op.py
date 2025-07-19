@@ -51,7 +51,6 @@ class bbp_duplicate(bpy.types.Operator):
         return context.active_object is not None and  context.active_object.mode=="SCULPT"
 
     def execute(self, context):
-        #main(context)
         print("bbp_duplicate---")
         duplicate(context)
         force_symmetry_x()
@@ -71,10 +70,9 @@ class bbp_insert_object(bpy.types.Operator):
     def execute(self, context):
         print("insert object")
         if isMasked(context):
-            bpy.ops.mesh.paint_mask_extract()
+            bpy.ops.sculpt.paint_mask_extract()
         else:
             bpy.ops.object.mode_set(mode='OBJECT')
-            #duplicate(context)
             bpy.ops.mesh.primitive_plane_add(enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
 
         bpy.ops.object.mode_set(mode='OBJECT')
@@ -110,10 +108,6 @@ class bbp_insert_object(bpy.types.Operator):
             bpy.ops.mesh.primitive_cube_add(enter_editmode=False, align='WORLD', location=cursor_location , scale=(gdim, gdim, gdim))
         #print("new dimensions "+str(context.active_object.dimensions) )
         bpy.ops.object.mode_set(mode='OBJECT')
-     
-        #print("new dimensions x "+str(dx) )
-        #print("new dimensions y "+str(dy) )
-        #print("new dimensions z "+str(dz) )
         bpy.context.object.location = [lx,ly,lz]
         bpy.context.view_layer.update() 
         print("altered dimensions "+str( bpy.context.object.dimensions) )
