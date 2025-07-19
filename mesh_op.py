@@ -101,6 +101,29 @@ class bbp_spherize(bpy.types.Operator):
         return {'FINISHED'}
 
 
+class bbp_decimate(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_decimate"
+    bl_label = "bbp_decimate"
+    bl_options = {"REGISTER", "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context)
+        print("bbp_decimate---")
+        bpy.ops.object.modifier_add(type='DECIMATE')
+        bpy.context.object.modifiers["Decimate"].ratio = bpy.context.scene.ratio_float
+        bpy.context.object.modifiers["Decimate"].use_symmetry = True
+        bpy.context.object.modifiers["Decimate"].symmetry_axis = 'X'
+        bpy.context.object.modifiers["Decimate"].use_collapse_triangulate = True
+        bpy.ops.object.modifier_apply(modifier="Decimate")
+        force_symmetry_x()
+        return {'FINISHED'}
+
+
         
 class bbp_sculpt_solidify(bpy.types.Operator):
     """Tooltip"""

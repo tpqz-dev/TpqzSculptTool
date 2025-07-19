@@ -51,6 +51,7 @@ classes = (
     bbp_sculpt_solidify,
     bbp_delete_by_symetry,
     bbp_mirror,
+    bbp_decimate,
     bbp_insert_object,
     bbp_split_face_set,
     bbp_copy_face_set,
@@ -77,6 +78,7 @@ def register():
     bpy.types.Scene.solidify_float = bpy.props.FloatProperty(name="solidify_float", default=0.1)
     bpy.types.Scene.solidify_bool = bpy.props.BoolProperty(name="solidify_bool", default=True)
     bpy.types.Scene.tpqz_force_symmetry = bpy.props.BoolProperty(name="tpqz_force_symmetry", default=True)
+    bpy.types.Scene.ratio_float = bpy.props.FloatProperty(name="ratio_float", default=0.2, min=0.01, max=1.0)
     bpy.types.Scene.obj = bpy.props.StringProperty()
     bpy.types.Scene.list_chosen_object = bpy.props.PointerProperty(
     type=bpy.types.Object,

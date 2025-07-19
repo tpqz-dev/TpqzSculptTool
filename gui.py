@@ -140,19 +140,37 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         #col = box.column(align = True)
         row = col.row()
         row.label(text="mesh ops:")
-
         row = col.row()
         row.operator("object.bbp_close_hole", text="close holes")
         row.operator("object.bbp_mask_subdivide", text="mask subdivide")
         row = col.row()
-        row.operator("object.bbp_spherize", text="sb-sphere")        
-        row = col.row()
+        row.operator("object.bbp_spherize", text="sb-sphere")    
+        row = layout.row(align=True)
         col = row.column()
-        col.prop(scene, 'solidify_float', text="val")
+        col.prop(scene, 'ratio_float', text="val")
         col = row.column()
-        col.operator("object.bbp_sculpt_solidify", text="Solidify")
-        col = row.column()
-        col.prop(scene,"solidify_bool", text="Apply")
+        col.operator("object.bbp_decimate", text="decimate")
+        # row = col.row()
+        # col = row.column()
+        # col.prop(scene, 'solidify_float', text="val")
+        # col = row.column()
+        # col.operator("object.bbp_sculpt_solidify", text="Solidify")
+        # col = row.column()
+        # col.prop(scene,"solidify_bool", text="Apply")
+        row = layout.row(align=True)  # Align=True keeps spacing tight
+        # First column: Float property
+        col1 = row.column()
+        col1.prop(scene, 'solidify_float', text="val")
+
+        # Second column: Operator button
+        col2 = row.column()
+        col2.operator("object.bbp_sculpt_solidify", text="Solidify")
+
+        # Third column: Boolean toggle
+        col3 = row.column()
+        col3.prop(scene, "solidify_bool", text="Apply")
+
+    
        
         #-------------------------------------------------------------------------------------
         # delete
