@@ -28,7 +28,7 @@ class bbp_remesh(bpy.types.Operator):
         bpy.context.object.data.use_remesh_fix_poles = True
         bpy.context.object.data.use_remesh_preserve_attributes = True
         bpy.ops.object.voxel_remesh()
-        force_symmetry_x()
+        #force_symmetry_x()
         return {'FINISHED'} 
 
 class bbp_close_hole(bpy.types.Operator):

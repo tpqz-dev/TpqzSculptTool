@@ -70,12 +70,19 @@ class bbp_insert_object(bpy.types.Operator):
     def execute(self, context):
         print("insert object")
         if isMasked(context):
+            print("- create with mask")
             bpy.ops.sculpt.paint_mask_extract()
+            bpy.ops.object.mode_set(mode='OBJECT')
         else:
+            print("- create no mask")
             bpy.ops.object.mode_set(mode='OBJECT')
             bpy.ops.mesh.primitive_plane_add(enter_editmode=False, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+            plane = bpy.context.active_object
+            bpy.ops.object.select_all(action='DESELECT') 
+            plane.select_set(True)
+            bpy.context.view_layer.objects.active = plane  
+            plane.name = "tmp_3dObject"
 
-        bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
         original_dimensions =  bpy.context.object.dimensions
         original_location =  bpy.context.object.location
@@ -113,7 +120,8 @@ class bbp_insert_object(bpy.types.Operator):
         print("altered dimensions "+str( bpy.context.object.dimensions) )
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
         bpy.ops.object.mode_set(mode='SCULPT')
-        force_symmetry_x()
+        #force_symmetry_x()
+        pivot_to_center()
         set_move_brush()
         return {'FINISHED'}    
 
