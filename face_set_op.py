@@ -15,8 +15,7 @@ class bbp_mask_hidden_face_set(bpy.types.Operator):
     def execute(self, context):
         print("test")
         bpy.ops.paint.mask_flood_fill(mode='VALUE', value=1)
-        #bpy.ops.sculpt.face_set_change_visibility(mode='SHOW_ALL')
-        bpy.ops.sculpt.reveal_all()
+        bpy.ops.paint.hide_show_all(action='SHOW')
         bpy.ops.paint.mask_flood_fill(mode='INVERT')
         force_symmetry_x()
         return {'FINISHED'} 
