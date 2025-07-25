@@ -57,6 +57,7 @@ classes = (
     bbp_copy_face_set,
     bbp_mask_hidden_face_set,
     bbp_split_by_symetry,
+    bbp_symetry,
     bbp_boolean,
     custom_menu_tpqz_sculpt,
     call_menu_tpqz

@@ -216,32 +216,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         #-------------------------------------------------------------------------------------
         # symmetry
         #------------------------------------------------------------------------------------- 
-        # layout = self.layout
-        # box = layout.box()
-        # col = box.column(align = True)
-        # row = col.row()
-  
-        # row.label(text="Flip/Sim/Slice:") 
-        # row = layout.row()
-        # row.operator('object.bbp_mirror', text='FlipX', icon='MOD_MIRROR').value ="X"
-        # row.operator('object.bbp_mirror', text='FlipY', icon='MOD_MIRROR').value ="Y" # todo
-        # row.operator('object.bbp_mirror', text='FlipZ', icon='MOD_MIRROR').value ="Z" # todo
-        
-        # # mirror
-        # # symmetrize negative
-        # row = layout.row()
-        # split = row.split(factor=0.33)
-        # col = split.column()
-        # col.operator('object.sym', text="SymX", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_X"
-        # col = split.column()
-        # col.operator('object.sym', text="SymY", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_Y"
-        # col = split.column()
-        # col.operator('object.sym', text="SymZ", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_Z"
 
-        # row = layout.row()
-        # row.operator('object.bbp_split_by_symetry', text='SliceX', icon='MOD_MIRROR').value ="X"
-        # row.operator('object.bbp_split_by_symetry', text='SliceY', icon='MOD_MIRROR').value ="Y" 
-        # row.operator('object.bbp_split_by_symetry', text='SliceZ', icon='MOD_MIRROR').value ="Z" 
         layout = self.layout
         box = layout.box()
         col = box.column(align = True)
@@ -249,7 +224,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row = col.row()
         row.label(text="Flip/Sim/Slice:")
 
-        # Flip section
+        # Flip 
         row = col.row()
         row.operator('object.bbp_mirror', text='FlipX', icon='MOD_MIRROR').value = "X"
         row.operator('object.bbp_mirror', text='FlipY', icon='MOD_MIRROR').value = "Y"
@@ -257,11 +232,11 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
 
         # Symmetrize negative
         row = col.row()
-        row.operator('object.sym', text="SymX", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_X"
-        row.operator('object.sym', text="SymY", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_Y"
-        row.operator('object.sym', text="SymZ", icon='MOD_MESHDEFORM').sym_axis = "NEGATIVE_Z"
+        row.operator('object.bbp_symetry', text="SymX", icon='MOD_MESHDEFORM').value = "X"
+        row.operator('object.bbp_symetry', text="SymY", icon='MOD_MESHDEFORM').value = "Y"
+        row.operator('object.bbp_symetry', text="SymZ", icon='MOD_MESHDEFORM').value = "Z"
 
-        # Slice section
+        # Slice
         row = col.row()
         row.operator('object.bbp_split_by_symetry', text='SliceX', icon='MOD_MIRROR').value = "X"
         row.operator('object.bbp_split_by_symetry', text='SliceY', icon='MOD_MIRROR').value = "Y"

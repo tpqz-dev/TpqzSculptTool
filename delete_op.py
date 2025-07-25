@@ -158,3 +158,4 @@ class bbp_split_by_symetry(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='SCULPT')
         force_symmetry_x()
         return {'FINISHED'}
+

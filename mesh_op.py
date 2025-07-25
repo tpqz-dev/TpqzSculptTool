@@ -184,3 +184,30 @@ class bbp_mirror(bpy.types.Operator):
         #force_symmetry_x()
         return {'FINISHED'}
 
+
+class bbp_symetry(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_symetry"
+    bl_label = "bbp_symetry"
+    bl_options = {"REGISTER", "UNDO"}
+    value: bpy.props.StringProperty(name = 'value', default = 'X')
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context
+        val = self.value
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='SELECT')    
+        if val == "X":
+            bpy.ops.mesh.symmetrize(direction='NEGATIVE_X')
+        elif val=="Y":
+            bpy.ops.mesh.symmetrize(direction='NEGATIVE_Y')
+        else:
+            bpy.ops.mesh.symmetrize(direction='NEGATIVE_Z')
+
+        bpy.ops.object.mode_set(mode='SCULPT')
+        #force_symmetry_x()
+        return {'FINISHED'}
+
