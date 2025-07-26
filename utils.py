@@ -130,3 +130,50 @@ def set_move_brush():
             return True
         else:
             return False
+        
+def select_masked_verts(context):
+    obj = context.object
+
+    if obj is None or obj.type != 'MESH':
+        print("Pas d'objet mesh sélectionné.")
+        return
+
+    if context.mode != 'SCULPT':
+        bpy.ops.object.mode_set(mode='SCULPT')
+
+    me = obj.data
+
+    # read masked SCULPT
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    mask_layer = bm.verts.layers.float.get('.sculpt_mask')
+
+    if not mask_layer:
+        print("no mask.")
+        bm.free()
+        return
+
+    masked_verts_indices = []
+    bm.verts.ensure_lookup_table()
+    for i, v in enumerate(bm.verts):
+        if v[mask_layer] > 0.0:
+            masked_verts_indices.append(i)
+
+    bm.free()
+
+    # EDIT mode
+    bpy.ops.object.mode_set(mode='EDIT')
+    bm = bmesh.from_edit_mesh(me)
+    bm.verts.ensure_lookup_table()
+   
+
+    # select all
+    for v in bm.verts:
+        v.select = False
+
+    # select vertices masked
+    for i in masked_verts_indices:
+        bm.verts[i].select = True
+
+    bmesh.update_edit_mesh(me)
+    print(f"{len(masked_verts_indices)} sommets masqués sélectionnés.")

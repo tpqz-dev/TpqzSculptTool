@@ -20,6 +20,41 @@ class bbp_sculpt(bpy.types.Operator):
             bbpSculptExtract(context)
             force_symmetry_x()
         return {'FINISHED'}  
+    
+class bbp_editselect(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_editselect"
+    bl_label = "bbp_editselect"
+    bl_options = {'REGISTER', "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context)
+        print("extractAndSculpt---")
+        if isMasked(context):
+            select_masked_verts(context)
+        return {'FINISHED'}  
+    
+class bbp_xtract(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_xtract"
+    bl_label = "bbp_xtract"
+    bl_options = {'REGISTER', "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context)
+        print("extract---")
+        if isMasked(context):
+            bpy.ops.sculpt.paint_mask_extract(add_solidify=False)
+            bpy.ops.object.mode_set(mode='SCULPT')
+        return {'FINISHED'}  
 
 class bbp_mask_new_object(bpy.types.Operator):
     """Tooltip"""

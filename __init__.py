@@ -30,6 +30,7 @@ addon_keymaps = []
 classes = (
     bbpSculptViewPanelObject,
     bbp_sculpt,
+    bbp_xtract,
     bbp_delete,
     bbp_spherize,
     bbp_delete_hiddenpg,
@@ -60,7 +61,9 @@ classes = (
     bbp_symetry,
     bbp_boolean,
     custom_menu_tpqz_sculpt,
-    call_menu_tpqz
+    call_menu_tpqz,
+    bbp_editselect
+  
     )
 
 def scene_list_mesh_object_poll(self, object):
