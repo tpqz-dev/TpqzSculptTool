@@ -4,7 +4,7 @@ Workflow plugin for Blender sculpt mode.
 
 ### DEMO :
 - https://www.youtube.com/watch?v=7B63X3QTvn4
-- https://www.youtube.com/watch?v=X2SYB6l-yyE&t=44s
+- https://youtu.be/B9feemIMhaM 
 
 
 ### Why this plugin

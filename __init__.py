@@ -66,6 +66,7 @@ classes = (
   
     )
 # TODO Faceset by normals Edit mode face by normals
+# TODO Update documentation
 def scene_list_mesh_object_poll(self, object):
     return object.type == 'MESH'
 
