@@ -177,3 +177,5 @@ def select_masked_verts(context):
 
     bmesh.update_edit_mesh(me)
     print(f"{len(masked_verts_indices)} sommets masqués sélectionnés.")
+
+

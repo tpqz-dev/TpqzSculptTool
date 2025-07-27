@@ -32,9 +32,13 @@ class bbp_editselect(bpy.types.Operator):
         return context.active_object is not None and  context.active_object.mode=="SCULPT"
 
     def execute(self, context):
-        #main(context)
         print("extractAndSculpt---")
         if isMasked(context):
+            print("Deselect---")
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.mesh.select_all(action='DESELECT')  
+            bpy.ops.object.mode_set(mode='SCULPT')
+            print("select masked verices---")
             select_masked_verts(context)
         return {'FINISHED'}  
     

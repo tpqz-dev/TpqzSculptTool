@@ -65,7 +65,7 @@ classes = (
     bbp_editselect
   
     )
-
+# TODO Faceset by normals Edit mode face by normals
 def scene_list_mesh_object_poll(self, object):
     return object.type == 'MESH'
 
