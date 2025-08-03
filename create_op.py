@@ -42,6 +42,8 @@ class bbp_editselect(bpy.types.Operator):
             select_masked_verts(context)
         return {'FINISHED'}  
     
+
+
 class bbp_xtract(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.bbp_xtract"
@@ -59,6 +61,32 @@ class bbp_xtract(bpy.types.Operator):
             bpy.ops.sculpt.paint_mask_extract(add_solidify=False)
             bpy.ops.object.mode_set(mode='SCULPT')
         return {'FINISHED'}  
+
+class bbp_xtract_select_border(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_xtract_select_border"
+    bl_label = "bbp_xtract_select_border"
+    bl_options = {'REGISTER', "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context)
+        print("extract---")
+        if isMasked(context):
+            bpy.ops.sculpt.paint_mask_extract(add_solidify=False)
+            bpy.ops.object.mode_set(mode='SCULPT')
+            bpy.ops.sculpt.mesh_filter(start_mouse=(738, 652), strength=0.035)
+            bpy.ops.sculpt.mask_from_boundary(settings_source='OPERATOR', boundary_mode='MESH')
+            print("select masked verices---")
+            select_masked_verts(context)
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.mesh.select_all(action='INVERT')
+            bpy.ops.mesh.delete(type='VERT')
+            bpy.ops.mesh.select_all(action='SELECT')
+        return {'FINISHED'}     
 
 class bbp_mask_new_object(bpy.types.Operator):
     """Tooltip"""
@@ -133,7 +161,6 @@ class bbp_insert_object(bpy.types.Operator):
         ly = original_location[1]
         lz = original_location[2]
         gdim = greaterDimension(original_dimensions)
-        
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.select_all(action='SELECT')
         bpy.ops.view3d.snap_cursor_to_selected()
@@ -165,5 +192,41 @@ class bbp_insert_object(bpy.types.Operator):
         return {'FINISHED'}    
 
 
+class bbp_empty_object(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_empty_object"
+    bl_label = "bbp_empty_object"
+    bl_options = {"REGISTER", "UNDO"}
+    value: bpy.props.StringProperty(name = 'value', default = 'cube')
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        # to object mode
+        # 1. Switch to Object Mode
+        bpy.ops.object.mode_set(mode='OBJECT')
+        
+        print("bbp_empty object---")
+        # 2. Create a new plane (which gives us 4 vertices)
+        print("create plane---")
+        bpy.ops.mesh.primitive_plane_add(enter_editmode=True, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
+        bpy.ops.mesh.select_all(action='SELECT')
+        bpy.ops.mesh.delete(type='VERT')
+        # print("delete all done---")
+        # bpy.context.scene.tool_settings.use_mesh_automerge = True
+        # bpy.context.scene.tool_settings.use_mesh_automerge_and_split = True
+        # bpy.context.scene.tool_settings.double_threshold = 0.050
+        # bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
+        # bpy.ops.mesh.select_mode(use_extend=True, use_expand=False, type='EDGE')
+        print("select mode done---")
+        bpy.context.scene.tool_settings.use_snap = True
+        bpy.context.scene.tool_settings.snap_elements_individual = {'FACE_PROJECT'}
+        bpy.context.scene.tool_settings.snap_elements_base = {'VERTEX', 'FACE'}
+        print("snap elements done---")
+        return {'FINISHED'}  
+
+
+   
      
 

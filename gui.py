@@ -76,7 +76,11 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row = col.row()
         row.operator("object.bbp_duplicate", text="mesh duplicate",icon="DUPLICATE")
         row = col.row()
-        row.operator("object.bbp_editselect", text="mesh edit",icon="OUTLINER_OB_VOLUME")
+        row.operator("object.bbp_editselect", text="selected masked edit",icon="OUTLINER_OB_VOLUME")
+        row = col.row()
+        row.operator("object.bbp_empty_object", text="empty edit",icon="OUTLINER_OB_VOLUME")  
+        row = col.row()
+        row.operator("object.bbp_xtract_select_border", text="border xtract edit",icon="OUTLINER_OB_VOLUME")
         #"object:")
         row.separator(factor=2)
         row = col.row()
@@ -225,7 +229,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         col = box.column(align = True)
 
         row = col.row()
-        row.label(text="Flip/Sim/Slice:")
+        row.label(text="Flip/Sim/Slice/Rotate:")
 
         # Flip 
         row = col.row()
@@ -244,6 +248,11 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator('object.bbp_split_by_symetry', text='SliceX', icon='MOD_MIRROR').value = "X"
         row.operator('object.bbp_split_by_symetry', text='SliceY', icon='MOD_MIRROR').value = "Y"
         row.operator('object.bbp_split_by_symetry', text='SliceZ', icon='MOD_MIRROR').value = "Z"
+
+        row = col.row()
+        row.operator('object.bbp_rotate', text='RotateX', icon='MOD_MIRROR').value = "X"
+        row.operator('object.bbp_rotate', text='RotateY', icon='MOD_MIRROR').value = "Y"
+        row.operator('object.bbp_rotate', text='RotateZ', icon='MOD_MIRROR').value = "Z"
         #-------------------------------------------------------------------------------------
         # test
         #-------------------------------------------------------------------------------------  

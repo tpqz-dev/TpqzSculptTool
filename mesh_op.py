@@ -210,4 +210,29 @@ class bbp_symetry(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='SCULPT')
         #force_symmetry_x()
         return {'FINISHED'}
+    
+
+class bbp_rotate(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_rotate"
+    bl_label = "bbp_rotate"
+    bl_options = {"REGISTER", "UNDO"}
+    value: bpy.props.StringProperty(name='value', default='X')
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and context.active_object.mode == "SCULPT"
+
+    def execute(self, context):
+        val = self.value
+
+        if val == "X":
+            bpy.ops.transform.rotate(value=0.785398, orient_axis='X')  # 45 degrees in radians
+        elif val == "Y":
+            bpy.ops.transform.rotate(value=0.785398, orient_axis='Y')  # 45 degrees in radians
+        elif val == "Z":
+            bpy.ops.transform.rotate(value=0.785398, orient_axis='Z')  # 45 degrees in radians
+
+        bpy.ops.object.mode_set(mode='SCULPT')
+        return {'FINISHED'}
 

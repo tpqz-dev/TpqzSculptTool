@@ -62,11 +62,12 @@ classes = (
     bbp_boolean,
     custom_menu_tpqz_sculpt,
     call_menu_tpqz,
-    bbp_editselect
-  
+    bbp_editselect,
+    bbp_empty_object,
+    bbp_rotate,
+    bbp_xtract_select_border
     )
-# TODO Faceset by normals Edit mode face by normals
-# TODO Update documentation
+
 def scene_list_mesh_object_poll(self, object):
     return object.type == 'MESH'
 
@@ -92,7 +93,6 @@ def register():
     bpy.types.INFO_HT_header.append(draw_item)
 
 def unregister():
-    #bpy.utils.unregister_module(__name__)
     for c in classes:
         bpy.utils.unregister_class(c)
     del bpy.types.Scene.list_chosen_object
@@ -100,6 +100,3 @@ def unregister():
     del bpy.types.Scene.solidify_bool
     del bpy.types.Scene.tpqz_force_symmetry 
     bpy.types.INFO_HT_header.remove(draw_item)
-
-    # bug boolean with empty target
-    # split hidden

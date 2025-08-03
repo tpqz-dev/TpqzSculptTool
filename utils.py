@@ -88,17 +88,15 @@ def bbpSculptExtract(context):
 
     print("Sculpt extract complete!")
 
-
-
-
     
 def isMasked(context):
      bpy.ops.object.mode_set(mode='SCULPT')
      bm = bmesh.new() # New bmesh container
      bm.from_mesh(context.sculpt_object.data) # Fill container with our object        
      mask = bm.verts.layers.float.get('.sculpt_mask')# get mask points
-    #print("number of elements "+ str(bm.verts.layers.paint_mask.verify()))
+     #print("number of elements "+ str(bm.verts.layers.paint_mask.verify()))
      bm.verts.ensure_lookup_table() # Just incase > Remove if unneccessary   
+     print("mask layer "+str(mask))
      res = False if mask is None else True
      return res; 
 
