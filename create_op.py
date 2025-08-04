@@ -74,17 +74,22 @@ class bbp_xtract_select_border(bpy.types.Operator):
 
     def execute(self, context):
         #main(context)
-        print("extract---")
         if isMasked(context):
+            print("extract---")
             bpy.ops.sculpt.paint_mask_extract(add_solidify=False)
             bpy.ops.object.mode_set(mode='SCULPT')
+            print("inflate---")
             bpy.ops.sculpt.mesh_filter(start_mouse=(738, 652), strength=0.035)
+            print("mask boundaries---")
             bpy.ops.sculpt.mask_from_boundary(settings_source='OPERATOR', boundary_mode='MESH')
-            print("select masked verices---")
+            print("select in Edit masked vertices---")
             select_masked_verts(context)
             bpy.ops.object.mode_set(mode='EDIT')
+            print("invert selection vertices---")
             bpy.ops.mesh.select_all(action='INVERT')
+            print("delecte vertices---")
             bpy.ops.mesh.delete(type='VERT')
+            print("select remaing vertices---")
             bpy.ops.mesh.select_all(action='SELECT')
         return {'FINISHED'}     
 

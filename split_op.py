@@ -66,7 +66,7 @@ class bbp_split_hiddenpg(bpy.types.Operator):
         #main(context)
         print("bbp_split_hidden face set---")
         bpy.ops.paint.mask_flood_fill(mode='VALUE', value=1)
-        bpy.ops.sculpt.reveal_all()
+        bpy.ops.paint.hide_show_all(action='SHOW')
         bpy.ops.sculpt.paint_mask_slice(fill_holes=False, new_object=True)
         bpy.ops.object.mode_set(mode='SCULPT')
   
