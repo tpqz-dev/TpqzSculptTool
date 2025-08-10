@@ -143,7 +143,7 @@ class bbp_insert_object(bpy.types.Operator):
         print("insert object")
         if isMasked(context):
             print("- create with mask")
-            bpy.ops.sculpt.paint_mask_extract()
+            bpy.ops.sculpt.paint_mask_extract(add_solidify=False)
             bpy.ops.object.mode_set(mode='OBJECT')
         else:
             print("- create no mask")
@@ -184,14 +184,12 @@ class bbp_insert_object(bpy.types.Operator):
             bpy.ops.mesh.primitive_plane_add(size=2, enter_editmode=False, align='WORLD',  location=cursor_location, scale=(gdim, gdim, gdim))
         else:
             bpy.ops.mesh.primitive_cube_add(enter_editmode=False, align='WORLD', location=cursor_location , scale=(gdim, gdim, gdim))
-        #print("new dimensions "+str(context.active_object.dimensions) )
         bpy.ops.object.mode_set(mode='OBJECT')
         bpy.context.object.location = [lx,ly,lz]
         bpy.context.view_layer.update() 
         print("altered dimensions "+str( bpy.context.object.dimensions) )
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
         bpy.ops.object.mode_set(mode='SCULPT')
-        #force_symmetry_x()
         pivot_to_center()
         set_move_brush()
         return {'FINISHED'}    
@@ -218,12 +216,7 @@ class bbp_empty_object(bpy.types.Operator):
         bpy.ops.mesh.primitive_plane_add(enter_editmode=True, align='WORLD', location=(0, 0, 0), scale=(1, 1, 1))
         bpy.ops.mesh.select_all(action='SELECT')
         bpy.ops.mesh.delete(type='VERT')
-        # print("delete all done---")
-        # bpy.context.scene.tool_settings.use_mesh_automerge = True
-        # bpy.context.scene.tool_settings.use_mesh_automerge_and_split = True
-        # bpy.context.scene.tool_settings.double_threshold = 0.050
-        # bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
-        # bpy.ops.mesh.select_mode(use_extend=True, use_expand=False, type='EDGE')
+
         print("select mode done---")
         bpy.context.scene.tool_settings.use_snap = True
         bpy.context.scene.tool_settings.snap_elements_individual = {'FACE_PROJECT'}
