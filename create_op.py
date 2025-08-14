@@ -32,7 +32,7 @@ class bbp_editselect(bpy.types.Operator):
         return context.active_object is not None and  context.active_object.mode=="SCULPT"
 
     def execute(self, context):
-        print("extractAndSculpt---")
+        print("ismasked---")
         if isMasked(context):
             print("Deselect---")
             bpy.ops.object.mode_set(mode='EDIT')
@@ -224,6 +224,33 @@ class bbp_empty_object(bpy.types.Operator):
         print("snap elements done---")
         return {'FINISHED'}  
 
+class  bbp_xpand_mask(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_xpand_mask"
+    bl_label = "bbp_xpand_mask"
+    bl_options = {'REGISTER', "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context)
+        #if isMasked(context):
+        print("Deselect previous---")
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='DESELECT')  
+        bpy.ops.object.mode_set(mode='SCULPT')
+        print("select masked vertices---")
+        nbSelected = select_masked_verts(context)
+        print("Select linked---")
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_linked(delimit=set())   
+        print("change mode ---")                
+        bpy.ops.object.mode_set(mode='SCULPT')
+        print("mask selected ---")    
+        bpy.ops.mesh.selection_to_mask()
+        return {'FINISHED'} 
 
    
      

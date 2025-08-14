@@ -81,6 +81,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator("object.bbp_empty_object", text="empty edit",icon="OUTLINER_OB_VOLUME")  
         row = col.row()
         row.operator("object.bbp_xtract_select_border", text="border xtract edit",icon="OUTLINER_OB_VOLUME")
+       
         #"object:")
         row.separator(factor=2)
         row = col.row()
@@ -93,7 +94,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator("object.bbp_insert_object", text="plane",icon="MESH_PLANE").value="plane"
 
         #-------------------------------------------------------------------------------------
-        # face set
+        # face set/Mask
         #-------------------------------------------------------------------------------------
         layout = self.layout
         box = layout.box()
@@ -107,7 +108,9 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row = col.row()
         row.operator("sculpt.face_sets_create", text="masked", icon="FACE_MAPS").mode = "MASKED"
         row.operator("object.bbp_mask_hidden_face_set", text="mask hidden", icon="FACE_MAPS") 
-   
+        row = col.row()
+        row.operator("object.bbp_xpand_mask", text="expand mask", icon="FACE_MAPS")
+      
         #-------------------------------------------------------------------------------------
         # split
         #-------------------------------------------------------------------------------------        

@@ -95,13 +95,13 @@ def isMasked(context):
     bm.from_mesh(context.sculpt_object.data)  # Fill container with our object        
     mask = bm.verts.layers.float.get('.sculpt_mask')  # Get mask points
     bm.verts.ensure_lookup_table()  # Just in case > Remove if unnecessary   
-  
-    res = True
-    if not any(v.select for v in bm.verts): 
-        print("No mask detected.")
-        res = False
-    
-    print(" mask detected.")
+    res = False
+    for i, v in enumerate(bm.verts):
+        if v[mask] > 0.0:
+            print(" mask detected.")
+            res = True
+            break
+
     bm.free()  # Free the bmesh to avoid memory leaks
     return res
 
@@ -180,5 +180,6 @@ def select_masked_verts(context):
 
     bmesh.update_edit_mesh(me)
     print(f"{len(masked_verts_indices)} sommets masqués sélectionnés.")
+    return len(masked_verts_indices)
 
 

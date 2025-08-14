@@ -65,7 +65,8 @@ classes = (
     bbp_editselect,
     bbp_empty_object,
     bbp_rotate,
-    bbp_xtract_select_border
+    bbp_xtract_select_border,
+    bbp_xpand_mask
     )
 
 def scene_list_mesh_object_poll(self, object):

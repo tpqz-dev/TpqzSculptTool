@@ -92,7 +92,7 @@ class bbp_spherize(bpy.types.Operator):
         bpy.ops.object.editmode_toggle()
         bpy.ops.mesh.select_all(action='SELECT')
         bpy.context.scene.tool_settings.transform_pivot_point = 'INDIVIDUAL_ORIGINS'
-        bpy.ops.transform.shrink_fatten(value=0.127961, use_even_offset=False, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        bpy.ops.transform.shrink_fatten(value=0.087961, use_even_offset=False, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.ops.transform.tosphere(value=1, mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
@@ -236,3 +236,29 @@ class bbp_rotate(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='SCULPT')
         return {'FINISHED'}
 
+class bbp_quadriflow_remesh(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_quadriflow_remesh"
+    bl_label = "Quadriflow Remesh"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+        obj = context.active_object
+        if not obj:
+            self.report({'ERROR'}, "No active object found")
+            return {'CANCELLED'}
+
+        print(f"Starting Quadriflow Remesh with {self.target_faces} faces")
+        bpy.ops.object.mode_set(mode='OBJECT')  # Ensure we're in Object mode
+
+        # Set Quadriflow remesh parameters
+        bpy.context.object.data.remesh_mode = 'QUAD'
+        bpy.ops.object.quadriflow_remesh(
+            target_faces=self.target_faces,
+            use_mesh_symmetry=self.use_symmetry,
+            symmetry_axis=self.symmetry_axis
+        )
+
+        bpy.ops.object.mode_set(mode='SCULPT')  # Return to Sculpt mode
+        print("Quadriflow Remesh completed")
+        return {'FINISHED'}
