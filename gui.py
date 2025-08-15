@@ -255,12 +255,14 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
         layout.prop(brush, 'use_frontface', text="front")  
         layout.prop(brush, 'use_automasking_face_sets', text="faces set")  
         layout.prop(brush, 'use_automasking_topology', text="topo") 
-
+        layout.prop(brush, 'use_automasking_topology', text="topo") 
+        layout.operator("object.bbp_restore_sculpt", text="snapping off", icon="SNAP_OFF")
+        layout.separator()
         layout.operator("object.bbp_focal_view", text="focal 35",icon="RESTRICT_RENDER_ON").value = "35"
         layout.operator("object.bbp_focal_view", text="focal 50",icon="RESTRICT_RENDER_ON").value = "50"
         layout.operator("object.bbp_focal_view", text="focal 80",icon="RESTRICT_RENDER_ON").value = "80"
         layout.operator("object.bbp_focal_view", text="focal 90",icon="RESTRICT_RENDER_ON").value = "90" 
-        
+        layout.separator()
         layout.operator("object.bbp_sculpt_fade", text="Fade",icon="GHOST_ENABLED").value = "fade"
         layout.operator("object.bbp_sculpt_fade", text="Unfade",icon="OUTLINER_OB_LIGHT").value = "unfade"
        
