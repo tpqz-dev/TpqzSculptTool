@@ -301,6 +301,9 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
 def draw_item(self, context):
     layout = self.layout
     layout.menu(CustomMenuTpqz.bl_idname)
+#Todo
+
+# bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
 
 #hide some filters
 # bpy.context.space_data.use_filter_object_light = False
@@ -309,3 +312,8 @@ def draw_item(self, context):
 
 # snap
 #bpy.context.scene.tool_settings.use_snap = True
+
+# color
+#bpy.ops.sculpt.color_filter(start_mouse=(815, 360), strength=1.109, fill_color=(0.87974, 0.400697, 0.217362))
+    
+#bpy.ops.sculpt.color_filter(start_mouse=(815, 360), strength=1.109, fill_color=(0.87974, 0.400697, 0.217362))

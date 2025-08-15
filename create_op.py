@@ -18,7 +18,7 @@ class bbp_sculpt(bpy.types.Operator):
         print("extractAndSculpt---")
         if isMasked(context):
             bbpSculptExtract(context)
-            force_symmetry_x()
+            #force_symmetry_x()
         return {'FINISHED'}  
     
 class bbp_editselect(bpy.types.Operator):
@@ -108,7 +108,6 @@ class bbp_mask_new_object(bpy.types.Operator):
         bpy.ops.ed.undo_push(message="new object step")
         bpy.ops.sculpt.paint_mask_slice(new_object=True)
         bpy.ops.object.mode_set(mode='SCULPT')
-        force_symmetry_x()
         set_move_brush()
         return {'FINISHED'}
 
@@ -126,6 +125,7 @@ class bbp_duplicate(bpy.types.Operator):
         print("bbp_duplicate---")
         duplicate(context)
         set_move_brush()
+        pivot_to_center()
         return {'FINISHED'} 
 
 class bbp_insert_object(bpy.types.Operator):

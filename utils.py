@@ -96,7 +96,7 @@ def isMasked(context):
     mask = bm.verts.layers.float.get('.sculpt_mask')  # Get mask points
     bm.verts.ensure_lookup_table()  # Just in case > Remove if unnecessary   
     res = False
-    
+
     if not mask:
         print("no mask.")
     else:
@@ -123,12 +123,10 @@ def duplicate(context):
         bpy.ops.mesh.select_all(action='DESELECT')
         bpy.ops.mesh.select_all(action='SELECT')
         bpy.ops.mesh.duplicate_move(MESH_OT_duplicate={"mode":1}, TRANSFORM_OT_translate={"value":(0, 0, 0), "orient_type":'GLOBAL', "orient_matrix":((0, 0, 0), (0, 0, 0), (0, 0, 0)), "orient_matrix_type":'GLOBAL', "constraint_axis":(False, False, False), "mirror":False, "use_proportional_edit":False, "proportional_edit_falloff":'SMOOTH', "proportional_size":1, "use_proportional_connected":False, "use_proportional_projected":False, "snap":False, "snap_target":'CLOSEST', "snap_point":(0, 0, 0), "snap_align":False, "snap_normal":(0, 0, 0), "gpencil_strokes":False, "cursor_transform":False, "texture_space":False, "remove_on_cancel":False, "view2d_edge_pan":False, "release_confirm":False, "use_accurate":False, "use_automerge_and_split":False})
-     
         bpy.ops.mesh.separate(type='SELECTED')
         bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.object.select_all(action='DESELECT')
         bpy.ops.sculpt.sculptmode_toggle()
-        force_symmetry_x()
         bpy.context.view_layer.objects.active = currentObject
         currentObject.select_set(True)
 
@@ -185,6 +183,7 @@ def select_masked_verts(context):
         bm.verts[i].select = True
 
     bmesh.update_edit_mesh(me)
+    bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
     print(f"{len(masked_verts_indices)} sommets masqués sélectionnés.")
     return len(masked_verts_indices)
 
