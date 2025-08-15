@@ -86,6 +86,8 @@ def register():
     bpy.types.Scene.solidify_bool = bpy.props.BoolProperty(name="solidify_bool", default=True)
     bpy.types.Scene.tpqz_force_symmetry = bpy.props.BoolProperty(name="tpqz_force_symmetry", default=True)
     bpy.types.Scene.ratio_float = bpy.props.FloatProperty(name="ratio_float", default=0.2, min=0.01, max=1.0)
+    
+    
     bpy.types.Scene.obj = bpy.props.StringProperty()
     bpy.types.Scene.list_chosen_object = bpy.props.PointerProperty(
     type=bpy.types.Object,

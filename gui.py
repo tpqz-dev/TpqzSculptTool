@@ -30,21 +30,6 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         obj = context.object
         brush = context.tool_settings.sculpt.brush
 
-        layout = self.layout
-        box = layout.box()
-        col = box.column(align = True)
-        row = col.row()
-        row.label(text="view:")
-        row = col.row()
-        
-        buttonFocal35 = row.operator("object.bbp_focal_view", text="35",icon="RESTRICT_RENDER_ON").value = "35"
-        buttonFocal50 = row.operator("object.bbp_focal_view", text="50",icon="RESTRICT_RENDER_ON").value = "50"
-        buttonFocal80 = row.operator("object.bbp_focal_view", text="80",icon="RESTRICT_RENDER_ON").value = "80"
-        buttonFocal80 = row.operator("object.bbp_focal_view", text="90",icon="RESTRICT_RENDER_ON").value = "90" 
-        row = col.row()
-        row.operator("object.bbp_sculpt_fade", text="Fade",icon="GHOST_ENABLED").value = "fade"
-        row.operator("object.bbp_sculpt_fade", text="Unfade",icon="OUTLINER_OB_LIGHT").value = "unfade"
-        
         #-------------------------------------------------------------------------------------
         # pivot
         #-------------------------------------------------------------------------------------  
@@ -52,7 +37,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         box = layout.box()
         col = box.column(align = True)
         row = col.row()
-        row.label(text="pivot:")
+        row.label(text="pivot:", icon="PIVOT_INDIVIDUAL")
         row = col.row()
         
         row.operator("object.bbp_sculpt_restore_x", text="sym",icon="ORIENTATION_GIMBAL")
@@ -67,22 +52,21 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         box = layout.box()
         col = box.column(align = True)
         row = col.row()
-        row.label(text="create:")
+        row.label(text="create:", icon="LAYERGROUP_COLOR_01")
         row = col.row()
         row.operator("object.bbp_sculpt", text="Xtract & Solidify",icon="OUTLINER_OB_VOLUME")
         row.operator("object.bbp_xtract", text="Xtract",icon="OUTLINER_OB_VOLUME")
+        # row = col.row()
+        # row.operator("object.bbp_copy_face_set", text="Xtract faceset",icon="MESH_CUBE")
         row = col.row()
-        row.operator("object.bbp_copy_face_set", text="Xtract faceset",icon="MESH_CUBE")
-        row = col.row()
-        row.operator("object.bbp_duplicate", text="mesh duplicate",icon="DUPLICATE")
-        row = col.row()
-        row.operator("object.bbp_editselect", text="selected masked edit",icon="OUTLINER_OB_VOLUME")
+        row.operator("object.bbp_editselect", text="masked edit",icon="OUTLINER_OB_VOLUME")
+        row.operator("object.bbp_xtract_select_border", text="border edit",icon="OUTLINER_OB_VOLUME")
         row = col.row()
         row.operator("object.bbp_empty_object", text="empty edit",icon="OUTLINER_OB_VOLUME")  
         row = col.row()
-        row.operator("object.bbp_xtract_select_border", text="border xtract edit",icon="OUTLINER_OB_VOLUME")
-       
-        #"object:")
+        row.operator("object.bbp_duplicate", text="mesh duplicate",icon="OUTLINER_OB_VOLUME")
+        
+        #"object:"
         row.separator(factor=2)
         row = col.row()
         row.operator("object.bbp_insert_object", text="cube",icon="MESH_CUBE").value="cube"
@@ -101,7 +85,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         col = box.column(align=True)
         col.separator()
         row = col.row()
-        row.label(text="face set :")
+        row.label(text="face set :", icon="LAYERGROUP_COLOR_02")
         row = col.row()
         row.operator("sculpt.face_sets_create", text="visible", icon="FACE_MAPS").mode = 'VISIBLE'
         row.operator("sculpt.face_sets_init", text="loose", icon="FACE_MAPS").mode = "LOOSE_PARTS"
@@ -118,7 +102,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         box = layout.box()
         col = box.column(align = True)
         row = col.row()
-        row.label(text="split:")
+        row.label(text="split:", icon="LAYERGROUP_COLOR_03")
         row = col.row()
         row.operator("object.bbp_mask_new_object", text="mask",icon="ADD")
         row.operator("object.bbp_split_hiddenpg", text="hidden",icon="MOD_PHYSICS")
@@ -132,7 +116,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         col = box.column(align = True)
         col.separator()
         row = col.row()
-        row.label(text="remesh:")
+        row.label(text="remesh:", icon="LAYERGROUP_COLOR_04")
         row = col.row()
         row.operator("object.bbp_remesh", text="1").value = "1"
         row.operator("object.bbp_remesh", text=".2").value = "0.2"
@@ -145,7 +129,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         # mesh ops
         #------------------------------------------------------------------------------------- 
         row = col.row()
-        row.label(text="mesh ops:")
+        row.label(text="mesh ops:", icon="LAYERGROUP_COLOR_05")
         row = col.row()
         row.operator("object.bbp_close_hole", text="close holes")
         row.operator("object.bbp_mask_subdivide", text="mask subdivide")
@@ -177,7 +161,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         col = box.column(align = True)
         row = col.row()
         row = col.row()
-        row.label(text="delete:")
+        row.label(text="delete:", icon="CANCEL")
         row = col.row()
         row.operator("object.bbp_delete_mesh", text="mesh",icon="CANCEL")
         row.operator("object.bbp_delete_hiddenpg", text="hidden face set",icon="CANCEL")
@@ -197,7 +181,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         box = layout.box()
         col = box.column(align = True)
         row = col.row()
-        row.label(text="join:")
+        row.label(text="join:", icon="MOD_BOOLEAN")
         row = col.row()
         row.operator("object.bbp_join_meshes", text="join from outliner",icon="LINKED")
         row = layout.row()
@@ -232,7 +216,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         col = box.column(align = True)
 
         row = col.row()
-        row.label(text="Flip/Sim/Slice/Rotate:")
+        row.label(text="Flip/Sim/Slice/Rotate:", icon="MOD_MIRROR")
 
         # Flip 
         row = col.row()
@@ -256,25 +240,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator('object.bbp_rotate', text='RotateX', icon='MOD_MIRROR').value = "X"
         row.operator('object.bbp_rotate', text='RotateY', icon='MOD_MIRROR').value = "Y"
         row.operator('object.bbp_rotate', text='RotateZ', icon='MOD_MIRROR').value = "Z"
-        #-------------------------------------------------------------------------------------
-        # test
-        #-------------------------------------------------------------------------------------  
-class CustomMenuTpqz(bpy.types.Menu):
-    bl_label = "CustomMenuTpqz"
-    bl_idname = "OBJECT_MT_CustomMenuTpqz"
 
-    def draw(self, context):
-        brush = context.tool_settings.sculpt.brush
-        layout = self.layout
-        layout.label(text="Automasking :")
-        layout.prop(brush, 'use_frontface', text="front")  
-        layout.prop(brush, 'use_automasking_face_sets', text="faces set")  
-        layout.prop(brush, 'use_automasking_topology', text="topo") 
-        layout.label(text="pivot :")
-        layout.operator("object.bbp_sculpt_restore_x", text="sym",icon="ORIENTATION_GIMBAL")
-        layout.operator("sculpt.set_pivot_position", text="unmask",icon="ORIENTATION_LOCAL").mode='UNMASKED'
-        layout.operator("object.bbp_sculpt_unmasked_center", text="center",icon="ORIENTATION_VIEW")
-        layout.operator("sculpt.set_pivot_position", text="origin",icon="ORIENTATION_GLOBAL").mode='ORIGIN'
 
 class custom_menu_tpqz_sculpt(bpy.types.Menu):
     bl_label = "TPQZ Custom Menu"
@@ -289,31 +255,16 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
         layout.prop(brush, 'use_frontface', text="front")  
         layout.prop(brush, 'use_automasking_face_sets', text="faces set")  
         layout.prop(brush, 'use_automasking_topology', text="topo") 
-       
-        layout.operator("object.bbp_sculpt_restore_x", text="sym",icon="ORIENTATION_GIMBAL")
-        layout.operator("sculpt.set_pivot_position", text="unmask",icon="ORIENTATION_LOCAL").mode='UNMASKED'
-        layout.operator("object.bbp_sculpt_unmasked_center", text="center",icon="ORIENTATION_VIEW")
-        layout.operator("sculpt.set_pivot_position", text="origin",icon="ORIENTATION_GLOBAL").mode='ORIGIN'
-        #layout.prop(scene, 'tpqz_force_symmetry', text="force Sym")
-        
 
+        layout.operator("object.bbp_focal_view", text="focal 35",icon="RESTRICT_RENDER_ON").value = "35"
+        layout.operator("object.bbp_focal_view", text="focal 50",icon="RESTRICT_RENDER_ON").value = "50"
+        layout.operator("object.bbp_focal_view", text="focal 80",icon="RESTRICT_RENDER_ON").value = "80"
+        layout.operator("object.bbp_focal_view", text="focal 90",icon="RESTRICT_RENDER_ON").value = "90" 
+        
+        layout.operator("object.bbp_sculpt_fade", text="Fade",icon="GHOST_ENABLED").value = "fade"
+        layout.operator("object.bbp_sculpt_fade", text="Unfade",icon="OUTLINER_OB_LIGHT").value = "unfade"
+       
 
 def draw_item(self, context):
     layout = self.layout
     layout.menu(CustomMenuTpqz.bl_idname)
-#Todo
-
-# bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='VERT')
-
-#hide some filters
-# bpy.context.space_data.use_filter_object_light = False
-# bpy.context.space_data.use_filter_object_camera = False
-# bpy.context.space_data.use_filter_object_empty = False
-
-# snap
-#bpy.context.scene.tool_settings.use_snap = True
-
-# color
-#bpy.ops.sculpt.color_filter(start_mouse=(815, 360), strength=1.109, fill_color=(0.87974, 0.400697, 0.217362))
-    
-#bpy.ops.sculpt.color_filter(start_mouse=(815, 360), strength=1.109, fill_color=(0.87974, 0.400697, 0.217362))
