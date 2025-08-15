@@ -120,7 +120,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row = col.row()
         row.label(text="split:")
         row = col.row()
-        row.operator("object.bbp_mask_new_object", text="from mask",icon="ADD")
+        row.operator("object.bbp_mask_new_object", text="mask",icon="ADD")
         row.operator("object.bbp_split_hiddenpg", text="hidden",icon="MOD_PHYSICS")
         row.operator("object.bbp_split_group", text="loose",icon="OUTLINER_OB_POINTCLOUD")
 
@@ -294,7 +294,7 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
         layout.operator("sculpt.set_pivot_position", text="unmask",icon="ORIENTATION_LOCAL").mode='UNMASKED'
         layout.operator("object.bbp_sculpt_unmasked_center", text="center",icon="ORIENTATION_VIEW")
         layout.operator("sculpt.set_pivot_position", text="origin",icon="ORIENTATION_GLOBAL").mode='ORIGIN'
-        layout.prop(scene, 'tpqz_force_symmetry', text="force Sym")
+        #layout.prop(scene, 'tpqz_force_symmetry', text="force Sym")
         
 
 
@@ -302,3 +302,10 @@ def draw_item(self, context):
     layout = self.layout
     layout.menu(CustomMenuTpqz.bl_idname)
 
+#hide some filters
+# bpy.context.space_data.use_filter_object_light = False
+# bpy.context.space_data.use_filter_object_camera = False
+# bpy.context.space_data.use_filter_object_empty = False
+
+# snap
+#bpy.context.scene.tool_settings.use_snap = True

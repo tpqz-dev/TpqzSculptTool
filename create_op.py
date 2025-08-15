@@ -125,7 +125,6 @@ class bbp_duplicate(bpy.types.Operator):
     def execute(self, context):
         print("bbp_duplicate---")
         duplicate(context)
-        force_symmetry_x()
         set_move_brush()
         return {'FINISHED'} 
 
@@ -243,6 +242,7 @@ class  bbp_xpand_mask(bpy.types.Operator):
         bpy.ops.object.mode_set(mode='SCULPT')
         print("select masked vertices---")
         nbSelected = select_masked_verts(context)
+        print("nbSelected "+str(nbSelected))
         print("Select linked---")
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.select_linked(delimit=set())   
