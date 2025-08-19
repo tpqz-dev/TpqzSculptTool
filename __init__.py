@@ -24,6 +24,7 @@ from  .mesh_op import *
 from  .pivot_op import *
 from  .split_op import *
 from  .boolean import *
+#from .preferences import *
 
 addon_keymaps = []
 
@@ -67,7 +68,9 @@ classes = (
     bbp_rotate,
     bbp_xtract_select_border,
     bbp_xpand_mask,
-    bbp_restore_sculpt
+    bbp_restore_sculpt,
+    bbp_quadriflow_remesh,
+    bbp_sculpt_merge
     )
 
 def scene_list_mesh_object_poll(self, object):
@@ -82,13 +85,54 @@ if kc is not None:
 def register():
     for c in classes:
         bpy.utils.register_class(c)
-    #bpy.utils.register_module(__name__)
+
+    # custom types
     bpy.types.Scene.solidify_float = bpy.props.FloatProperty(name="solidify_float", default=0.1)
     bpy.types.Scene.solidify_bool = bpy.props.BoolProperty(name="solidify_bool", default=True)
+    
+    bpy.types.Scene.merge_float = bpy.props.FloatProperty(name="merge_float", default=0.001)
+    bpy.types.Scene.merge_bool = bpy.props.BoolProperty(name="merge_bool", default=True)
+    
     bpy.types.Scene.tpqz_force_symmetry = bpy.props.BoolProperty(name="tpqz_force_symmetry", default=True)
     bpy.types.Scene.ratio_float = bpy.props.FloatProperty(name="ratio_float", default=0.2, min=0.01, max=1.0)
-    
-    
+   
+
+
+    bpy.types.Scene.mesh_symmetry = bpy.props.BoolProperty(
+        name="mesh_symmetry",
+        description="Use Mesh Symmetry",
+        default=True,
+   )
+    bpy.types.Scene.preserve_boundary = bpy.props.BoolProperty(
+        name="preserve_boundary",
+        description="Preserve Sharp Edges",
+        default=True,
+    )
+    bpy.types.Scene.preserve_sharp = bpy.props.BoolProperty(
+        name="preserve_sharp",
+        description="Preserve Sharp Edges",
+        default=True,
+    )
+    bpy.types.Scene.preserve_attributes = bpy.props.BoolProperty(
+        name="preserve_attributes",
+        description="Preserve Paint Mask",
+        default=True,   
+    )   
+
+    bpy.types.Scene.smooth_normals = bpy.props.BoolProperty(
+        name="smooth_normals",
+        description="Smooth Normals",
+        default=True,
+    )   
+    bpy.types.Scene.target_faces = bpy.props.IntProperty(
+        name="target_faces",
+        description="Target Faces",
+        default=100,
+        min=100,
+        max=10000000,
+    )
+
+
     bpy.types.Scene.obj = bpy.props.StringProperty()
     bpy.types.Scene.list_chosen_object = bpy.props.PointerProperty(
     type=bpy.types.Object,

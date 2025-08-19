@@ -135,23 +135,24 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator("object.bbp_mask_subdivide", text="mask subdivide")
         row = col.row()
         row.operator("object.bbp_spherize", text="sb-sphere")    
-        row = layout.row(align=True)
-        col = row.column()
-        col.prop(scene, 'ratio_float', text="val")
-        col = row.column()
-        col.operator("object.bbp_decimate", text="decimate")
-        row = layout.row(align=True)  # Align=True keeps spacing tight
-        # First column: Float property
+        row = col.row()
         col1 = row.column()
         col1.prop(scene, 'solidify_float', text="val")
-
         # Second column: Operator button
         col2 = row.column()
         col2.operator("object.bbp_sculpt_solidify", text="Solidify")
-
         # Third column: Boolean toggle
         col3 = row.column()
         col3.prop(scene, "solidify_bool", text="Apply")
+        row = col.row()
+        col1 = row.column()
+        col1.prop(scene, 'merge_float', text="val")
+        # Second column: Operator button
+        col2 = row.column()
+        col2.operator("object.bbp_sculpt_merge", text="merge")
+        # Third column: Boolean toggle
+        col3 = row.column()
+        col3.prop(scene, "merge_bool", text="Apply")
 
         #-------------------------------------------------------------------------------------
         # delete
@@ -159,7 +160,6 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         layout = self.layout
         box = layout.box()
         col = box.column(align = True)
-        row = col.row()
         row = col.row()
         row.label(text="delete:", icon="CANCEL")
         row = col.row()
@@ -235,13 +235,35 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.operator('object.bbp_split_by_symetry', text='SliceX', icon='MOD_MIRROR').value = "X"
         row.operator('object.bbp_split_by_symetry', text='SliceY', icon='MOD_MIRROR').value = "Y"
         row.operator('object.bbp_split_by_symetry', text='SliceZ', icon='MOD_MIRROR').value = "Z"
-
+        
+        # Rotation
         row = col.row()
         row.operator('object.bbp_rotate', text='RotateX', icon='MOD_MIRROR').value = "X"
         row.operator('object.bbp_rotate', text='RotateY', icon='MOD_MIRROR').value = "Y"
         row.operator('object.bbp_rotate', text='RotateZ', icon='MOD_MIRROR').value = "Z"
 
-
+        layout = self.layout
+        box = layout.box()
+        col = box.column(align = True)
+        row = col.row()
+        row.label(text="Remesh :", icon="PIVOT_INDIVIDUAL")
+        row = col.row()
+        row.label(text="decimate :", icon="PIVOT_INDIVIDUAL")
+        row.prop(scene, 'ratio_float', text="val")
+        row.operator("object.bbp_decimate", text="decimate")
+        row = col.row() 
+        row.label(text="Quadriflow :", icon="PIVOT_INDIVIDUAL")
+        row = col.row()
+        row.prop(scene, 'target_faces', text="faces")
+        row = col.row()
+        row.prop(scene, 'mesh_symmetry', text="symmetry")
+        row.prop(scene, 'preserve_attributes', text="attributes")
+        row = col.row()
+        row.prop(scene, 'preserve_sharp', text="sharp")
+        row.prop(scene, 'preserve_boundary', text="boundary")
+        row = col.row()
+        row.operator("object.bbp_quadriflow_remesh", text="Quadriflow Remesh", icon="MOD_REMESH")
+        
 class custom_menu_tpqz_sculpt(bpy.types.Menu):
     bl_label = "TPQZ Custom Menu"
     bl_idname = "OBJECT_MT_custom_menu_tpqz"
@@ -251,7 +273,6 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
         brush = context.tool_settings.sculpt.brush
         layout = self.layout
         scene = context.scene
-
         layout.prop(brush, 'use_frontface', text="front")  
         layout.prop(brush, 'use_automasking_face_sets', text="faces set")  
         layout.prop(brush, 'use_automasking_topology', text="topo") 
@@ -265,8 +286,11 @@ class custom_menu_tpqz_sculpt(bpy.types.Menu):
         layout.separator()
         layout.operator("object.bbp_sculpt_fade", text="Fade",icon="GHOST_ENABLED").value = "fade"
         layout.operator("object.bbp_sculpt_fade", text="Unfade",icon="OUTLINER_OB_LIGHT").value = "unfade"
-       
+        layout.separator()
 
 def draw_item(self, context):
     layout = self.layout
     layout.menu(CustomMenuTpqz.bl_idname)
+
+
+

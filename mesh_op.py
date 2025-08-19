@@ -48,7 +48,7 @@ class bbp_close_hole(bpy.types.Operator):
         bpy.ops.mesh.fill_holes(sides=0 )
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
-        force_symmetry_x()
+        #force_symmetry_x()
         return {'FINISHED'} 
 
 
@@ -72,7 +72,7 @@ class bbp_mask_subdivide(bpy.types.Operator):
         bpy.ops.mesh.subdivide()
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
-        force_symmetry_x()
+        #force_symmetry_x()
         return {'FINISHED'} 
  
 
@@ -97,7 +97,7 @@ class bbp_spherize(bpy.types.Operator):
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
         bpy.ops.object.voxel_remesh()
-        force_symmetry_x()
+        #force_symmetry_x()
         return {'FINISHED'}
 
 
@@ -120,7 +120,7 @@ class bbp_decimate(bpy.types.Operator):
         bpy.context.object.modifiers["Decimate"].symmetry_axis = 'X'
         bpy.context.object.modifiers["Decimate"].use_collapse_triangulate = True
         bpy.ops.object.modifier_apply(modifier="Decimate")
-        force_symmetry_x()
+        #force_symmetry_x()
         return {'FINISHED'}
 
 
@@ -152,6 +152,34 @@ class bbp_sculpt_solidify(bpy.types.Operator):
             print("no apply")
         bpy.ops.object.mode_set(mode='SCULPT')
         return {'FINISHED'}
+
+class bbp_sculpt_merge(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_sculpt_merge"
+    bl_label = "bbp_sculpt_merge"
+    bl_options = {"REGISTER", "UNDO"}
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None and  context.active_object.mode=="SCULPT"
+
+    def execute(self, context):
+        #main(context
+        print("bbp_sculpt_merge")
+        active_obj = bpy.context.active_object
+        bpy.ops.object.mode_set(mode='OBJECT')
+        bool_mod = active_obj.modifiers.new(type="WELD", name="TPQZ_WELD_BOOL")
+        bool_mod.merge_threshold = bpy.context.scene.merge_float
+        print("name = "+bool_mod.name)
+        if bpy.context.scene.merge_bool==True :
+            print("apply weld")
+            bpy.ops.object.modifier_apply(modifier="TPQZ_WELD_BOOL")
+            
+
+        else:
+            print("no apply")
+        bpy.ops.object.mode_set(mode='SCULPT')
+        return {'FINISHED'}
+
 
 class bbp_mirror(bpy.types.Operator):
     """Tooltip"""
@@ -248,17 +276,26 @@ class bbp_quadriflow_remesh(bpy.types.Operator):
             self.report({'ERROR'}, "No active object found")
             return {'CANCELLED'}
 
-        print(f"Starting Quadriflow Remesh with {self.target_faces} faces")
-        bpy.ops.object.mode_set(mode='OBJECT')  # Ensure we're in Object mode
+        print(f"Starting Quadriflow Remesh with faces")
+        
+        try:
+      
+            bpy.ops.object.quadriflow_remesh(
+            use_mesh_symmetry= bpy.context.scene.mesh_symmetry,
+            use_preserve_sharp=bpy.context.scene.preserve_sharp ,
+            use_preserve_boundary=bpy.context.scene.preserve_boundary ,
+            preserve_attributes=context.scene.preserve_attributes ,
+            smooth_normals=bpy.context.scene.smooth_normals,
+            target_faces=bpy.context.scene.target_faces,
+            mode="FACES"
+            )
 
-        # Set Quadriflow remesh parameters
-        bpy.context.object.data.remesh_mode = 'QUAD'
-        bpy.ops.object.quadriflow_remesh(
-            target_faces=self.target_faces,
-            use_mesh_symmetry=self.use_symmetry,
-            symmetry_axis=self.symmetry_axis
-        )
+        except RuntimeError as re:
+            self.report({'ERROR'}, "Remeshing: {0}".format(re))
+        else:
+            self.report({'INFO'}, "Remeshing completed")  
 
-        bpy.ops.object.mode_set(mode='SCULPT')  # Return to Sculpt mode
-        print("Quadriflow Remesh completed")
+
+
         return {'FINISHED'}
+    
