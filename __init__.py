@@ -70,7 +70,11 @@ classes = (
     bbp_xpand_mask,
     bbp_restore_sculpt,
     bbp_quadriflow_remesh,
-    bbp_sculpt_merge
+    bbp_sculpt_merge,
+    bbp_shading,
+    bbp_mask_unsubdivide,
+    bbp_quadriflow_auto_remesh,
+    bbp_sculpt_inflate
     )
 
 def scene_list_mesh_object_poll(self, object):
@@ -90,14 +94,14 @@ def register():
     bpy.types.Scene.solidify_float = bpy.props.FloatProperty(name="solidify_float", default=0.1)
     bpy.types.Scene.solidify_bool = bpy.props.BoolProperty(name="solidify_bool", default=True)
     
-    bpy.types.Scene.merge_float = bpy.props.FloatProperty(name="merge_float", default=0.001)
+    bpy.types.Scene.merge_float = bpy.props.FloatProperty(name="merge_float", default=0.04)
     bpy.types.Scene.merge_bool = bpy.props.BoolProperty(name="merge_bool", default=True)
     
     bpy.types.Scene.tpqz_force_symmetry = bpy.props.BoolProperty(name="tpqz_force_symmetry", default=True)
     bpy.types.Scene.ratio_float = bpy.props.FloatProperty(name="ratio_float", default=0.2, min=0.01, max=1.0)
+    
+    bpy.types.Scene.inflate_float = bpy.props.FloatProperty(name="inflate_float", default=0.04)
    
-
-
     bpy.types.Scene.mesh_symmetry = bpy.props.BoolProperty(
         name="mesh_symmetry",
         description="Use Mesh Symmetry",
@@ -131,8 +135,6 @@ def register():
         min=100,
         max=10000000,
     )
-
-
     bpy.types.Scene.obj = bpy.props.StringProperty()
     bpy.types.Scene.list_chosen_object = bpy.props.PointerProperty(
     type=bpy.types.Object,

@@ -41,4 +41,33 @@ class bbp_sculpt_fade(bpy.types.Operator):
             bpy.context.space_data.overlay.show_fade_inactive = False
         return {'FINISHED'}
 
+class bbp_shading(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.bbp_focal_view"
+    bl_label = "bbp_shading"
+    bl_options = {"REGISTER", "UNDO"}
+    #create property
+    value: bpy.props.StringProperty(name = 'value', default = 'MATCAP')
 
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None
+
+    def execute(self, context):
+        #print(self.value)
+        if self.value == "MATCAP":
+            bpy.context.space_data.shading.light = 'MATCAP'
+            bpy.context.space_data.shading.color_type = 'VERTEX'
+        elif self.value == "STUDIO":
+            bpy.context.space_data.shading.type = 'MATERIAL'
+            bpy.context.space_data.shading.color_type = 'VERTEX'
+        elif self.value == "FLAT":
+            bpy.context.space_data.shading.light = 'FLAT'
+            bpy.context.space_data.shading.color_type = 'VERTEX'
+# bpy.context.space_data.shading.light = 'STUDIO'
+# bpy.context.space_data.shading.color_type = 'MATERIAL'
+# bpy.context.space_data.shading.color_type = 'VERTEX'
+# bpy.context.space_data.shading.light = 'MATCAP'
+# bpy.context.space_data.shading.light = 'FLAT'
+
+        return {'FINISHED'} 

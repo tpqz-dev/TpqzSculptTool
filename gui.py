@@ -1,20 +1,6 @@
 import bpy
  #draw panel       
-class call_menu_tpqz(bpy.types.Operator):
-    """Tooltip"""
-    bl_idname = "object.call_menu_tpqz"
-    bl_label = "call_menu_tpqz"
-    bl_options = {'REGISTER', "UNDO"}
 
-    @classmethod
-    def poll(cls, context):
-        return context.active_object is not None
-
-    def execute(self, context):
-        #main(context)
-        print("custom menu")
-        bpy.ops.wm.call_menu(name=custom_menu_tpqz_sculpt.bl_idname)
-        return {'FINISHED'} 
 class bbpSculptViewPanelObject(bpy.types.Panel):
     """Creates the Create Object Panel"""
     bl_label = "TPQZ sculpt"
@@ -132,7 +118,10 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.label(text="mesh ops:", icon="LAYERGROUP_COLOR_05")
         row = col.row()
         row.operator("object.bbp_close_hole", text="close holes")
+        row = col.row()
         row.operator("object.bbp_mask_subdivide", text="mask subdivide")
+        row.operator("object.bbp_mask_unsubdivide", text="mask  unsubdivide", icon="MOD_REMESH")
+        
         row = col.row()
         row.operator("object.bbp_spherize", text="sb-sphere")    
         row = col.row()
@@ -144,6 +133,7 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         # Third column: Boolean toggle
         col3 = row.column()
         col3.prop(scene, "solidify_bool", text="Apply")
+
         row = col.row()
         col1 = row.column()
         col1.prop(scene, 'merge_float', text="val")
@@ -153,6 +143,14 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         # Third column: Boolean toggle
         col3 = row.column()
         col3.prop(scene, "merge_bool", text="Apply")
+
+        row = col.row()
+        col1 = row.column()
+        col1.prop(scene, 'inflate_float', text="val")
+        # Second column: Operator button
+        col2 = row.column()
+        col2.operator("object.bbp_sculpt_inflate", text="inflate")
+        
 
         #-------------------------------------------------------------------------------------
         # delete
@@ -252,6 +250,10 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.prop(scene, 'ratio_float', text="val")
         row.operator("object.bbp_decimate", text="decimate")
         row = col.row() 
+        row = col.row()
+        
+        
+        row = col.row() 
         row.label(text="Quadriflow :", icon="PIVOT_INDIVIDUAL")
         row = col.row()
         row.prop(scene, 'target_faces', text="faces")
@@ -263,34 +265,73 @@ class bbpSculptViewPanelObject(bpy.types.Panel):
         row.prop(scene, 'preserve_boundary', text="boundary")
         row = col.row()
         row.operator("object.bbp_quadriflow_remesh", text="Quadriflow Remesh", icon="MOD_REMESH")
+        #row = col.row()
+        #row.operator("object.bbp_quadriflow_auto_remesh", text="Quadriflow auto", icon="MOD_REMESH")
         
+
+class call_menu_tpqz(bpy.types.Operator):
+    """Tooltip"""
+    bl_idname = "object.call_menu_tpqz"
+    bl_label = "call_menu_tpqz"
+    bl_options = {'REGISTER', "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        return context.active_object is not None
+
+    def execute(self, context):
+        print("custom menu")
+        bpy.ops.wm.call_menu(name=custom_menu_tpqz_sculpt.bl_idname)
+        return {'FINISHED'} 
+
+
 class custom_menu_tpqz_sculpt(bpy.types.Menu):
     bl_label = "TPQZ Custom Menu"
     bl_idname = "OBJECT_MT_custom_menu_tpqz"
 
-
     def draw(self, context):
-        brush = context.tool_settings.sculpt.brush
-        layout = self.layout
-        scene = context.scene
-        layout.prop(brush, 'use_frontface', text="front")  
-        layout.prop(brush, 'use_automasking_face_sets', text="faces set")  
-        layout.prop(brush, 'use_automasking_topology', text="topo") 
-        layout.prop(brush, 'use_automasking_topology', text="topo") 
-        layout.operator("object.bbp_restore_sculpt", text="snapping off", icon="SNAP_OFF")
-        layout.separator()
-        layout.operator("object.bbp_focal_view", text="focal 35",icon="RESTRICT_RENDER_ON").value = "35"
-        layout.operator("object.bbp_focal_view", text="focal 50",icon="RESTRICT_RENDER_ON").value = "50"
-        layout.operator("object.bbp_focal_view", text="focal 80",icon="RESTRICT_RENDER_ON").value = "80"
-        layout.operator("object.bbp_focal_view", text="focal 90",icon="RESTRICT_RENDER_ON").value = "90" 
-        layout.separator()
-        layout.operator("object.bbp_sculpt_fade", text="Fade",icon="GHOST_ENABLED").value = "fade"
-        layout.operator("object.bbp_sculpt_fade", text="Unfade",icon="OUTLINER_OB_LIGHT").value = "unfade"
-        layout.separator()
+        if context.mode == 'SCULPT':
+            brush = context.tool_settings.sculpt.brush
+            row = self.layout
+            # box = layout.box()
+            # col = box.column(align=True)
 
-def draw_item(self, context):
-    layout = self.layout
-    layout.menu(CustomMenuTpqz.bl_idname)
+            # Frontface, face sets, topology (all in one row)
+           
+            row.prop(brush, 'use_frontface', text="Front")
+            
+            row.prop(brush, 'use_automasking_face_sets', text="Face Set")
+            row.prop(brush, 'use_automasking_topology', text="Topo")
+
+            # Snapping off (single button, full row)
+           
+            row.operator("object.bbp_restore_sculpt", text="Snapping Off", icon="SNAP_OFF")
+
+            # Focal view (all in one row)
+            
+            row.operator("object.bbp_focal_view", text="35", icon="RESTRICT_RENDER_ON").value = "35"
+            row.operator("object.bbp_focal_view", text="50", icon="RESTRICT_RENDER_ON").value = "50"
+            row.operator("object.bbp_focal_view", text="80", icon="RESTRICT_RENDER_ON").value = "80"
+            row.operator("object.bbp_focal_view", text="90", icon="RESTRICT_RENDER_ON").value = "90"
+
+            # Line break after the first three rows
+           
+            # Fade/Unfade (in one row)
+            
+            row.operator("object.bbp_sculpt_fade", text="Fade", icon="GHOST_ENABLED").value = "fade"
+            row.operator("object.bbp_sculpt_fade", text="Unfade", icon="OUTLINER_OB_LIGHT").value = "unfade"
+
+
+           
+        
+            
+# bpy.context.space_data.shading.light = 'STUDIO'
+# bpy.context.space_data.shading.color_type = 'MATERIAL'
+# bpy.context.space_data.shading.color_type = 'VERTEX'
+# bpy.context.space_data.shading.light = 'MATCAP'
+# bpy.context.space_data.shading.light = 'FLAT'
+
+
 
 
 

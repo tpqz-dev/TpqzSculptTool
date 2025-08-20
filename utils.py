@@ -133,6 +133,9 @@ def duplicate(context):
 def set_move_brush():
     bpy.ops.wm.tool_set_by_id(name="builtin.move")
 
+def set_scale_brush():
+    bpy.ops.wm.tool_set_by_id(name="builtin.scale")
+
     def is_null(value):
         if value is None:
             return True
