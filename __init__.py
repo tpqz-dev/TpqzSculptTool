@@ -140,7 +140,7 @@ def register():
     type=bpy.types.Object,
     poll=  scene_list_mesh_object_poll
     )
-    bpy.types.INFO_HT_header.append(draw_item)
+   
 
 def unregister():
     for c in classes:

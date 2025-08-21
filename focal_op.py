@@ -43,7 +43,7 @@ class bbp_sculpt_fade(bpy.types.Operator):
 
 class bbp_shading(bpy.types.Operator):
     """Tooltip"""
-    bl_idname = "object.bbp_focal_view"
+    bl_idname = "object.bbp_shading"
     bl_label = "bbp_shading"
     bl_options = {"REGISTER", "UNDO"}
     #create property
