@@ -60,6 +60,7 @@ class bbp_xtract(bpy.types.Operator):
         if isMasked(context):
             bpy.ops.sculpt.paint_mask_extract(add_solidify=False)
             bpy.ops.object.mode_set(mode='SCULPT')
+            
         return {'FINISHED'}  
 
 class bbp_xtract_select_border(bpy.types.Operator):

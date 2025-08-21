@@ -13,6 +13,14 @@ class bbp_delete_masked(bpy.types.Operator):
         #main(context)
         print("bbp_delete_masked---")
         bpy.ops.sculpt.paint_mask_slice(fill_holes=False, new_object=False)
+        # bpy.ops.object.mode_set(mode='EDIT')
+        # bpy.ops.mesh.select_all(action='DESELECT')  
+        # bpy.ops.object.mode_set(mode='SCULPT')
+        # print("select masked verices---")
+        # select_masked_verts(context)
+        # bpy.ops.object.mode_set(mode='EDIT')
+        # bpy.ops.mesh.delete(type='VERT')
+        # bpy.ops.object.mode_set(mode='SCULPT')
         return {'FINISHED'}  
     
 class bbp_delete_mesh(bpy.types.Operator):

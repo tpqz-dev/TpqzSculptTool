@@ -53,3 +53,4 @@ class bbp_restore_sculpt(bpy.types.Operator):
         print("Sculpt mode restored")
 
         return {'FINISHED'}
+    

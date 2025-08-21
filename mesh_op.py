@@ -65,13 +65,19 @@ class bbp_mask_subdivide(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         print("bbp_mask_subdivide---")
-        bpy.ops.paint.hide_show_masked(action='HIDE')
-        bpy.ops.object.editmode_toggle()
-        bpy.ops.mesh.select_all(action='DESELECT')
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='DESELECT')  
+        bpy.ops.object.mode_set(mode='SCULPT')
+        print("select masked verices---")
+        select_masked_verts(context)
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='EDGE')
+        
+        # bpy.ops.object.editmode_toggle()
+        # bpy.ops.mesh.select_all(action='DESELECT')
         bpy.ops.mesh.reveal()
         bpy.ops.mesh.subdivide()
-        bpy.ops.object.editmode_toggle()
-        bpy.ops.sculpt.sculptmode_toggle()
+        bpy.ops.object.mode_set(mode='SCULPT')
         return {'FINISHED'} 
  
 class bbp_mask_unsubdivide(bpy.types.Operator):
@@ -86,10 +92,13 @@ class bbp_mask_unsubdivide(bpy.types.Operator):
     def execute(self, context):
         #main(context)
         print("bbp_mask_subdivide---")
-        bpy.ops.paint.hide_show_masked(action='HIDE')
-        bpy.ops.object.editmode_toggle()
-        bpy.ops.mesh.select_all(action='DESELECT')
-        bpy.ops.mesh.reveal()
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_all(action='DESELECT')  
+        bpy.ops.object.mode_set(mode='SCULPT')
+        print("select masked verices---")
+        select_masked_verts(context)
+        bpy.ops.object.mode_set(mode='EDIT')
+        bpy.ops.mesh.select_mode(use_extend=False, use_expand=False, type='EDGE')
         bpy.ops.mesh.unsubdivide()
         bpy.ops.object.editmode_toggle()
         bpy.ops.sculpt.sculptmode_toggle()
